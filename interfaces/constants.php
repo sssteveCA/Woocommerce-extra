@@ -12,13 +12,16 @@ interface Constants{
     const ENDPOINT_ORDER_RECEIVED = 'order-received';
 
     //Elements id
-    const ELEMENTID_GTAG = 'google-tag-manager-js';
+    const ELEMENT_ID_GTAG = 'script#google-tag-manager-js';
 
     //Errors
     const ERR_WOOCOMMERCE_NOT_FOUND = 'Installa e attiva Woocommerce per utilizzare questo plugin';
 
     //Files
     const FILE_LOG = "log.txt";
+
+    //Google Analytics events
+    const GA_EVENT_PAYPAL_PURCHASE = 'paypal_purchase';
 
     //Requests
     const REQ_ORDER_RECEIVED = 'pagamento/order-received/';

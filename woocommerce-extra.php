@@ -92,19 +92,17 @@ function we_send_order_data(){
 <script>
     var data = <?php echo json_encode($data); ?>;
     //console.log(data);
-    //var gTagEl = document.querySelector("script[id='<?php echo C::ELEMENTID_GTAG; ?>']");
-    //var gTagEl = document.getElementById('<?php //echo C::ELEMENTID_GTAG; ?>');
-    var gTagEl = document.querySelectorAll('script#google-tag-manager-js');
-    console.log(gTagEl);
+    var gTagEl = document.querySelectorAll('<?php C::ELEMENT_ID_GTAG; ?>');
+    //console.log(gTagEl);
     if(gTagEl){
         gTagEl[0].addEventListener('load',()=>{
-                console.log("gTagEl loaded");
+                //console.log("gTagEl loaded");
         });
         gTagEl[0].addEventListener('error',()=>{
-            console.warn("gTagEl error");
+            //console.warn("gTagEl error");
         });
         //Send object to Google Analytics
-        gtag('event','paypal_purchase',data);
+        gtag('event','<?php echo C::GA_EVENT_PAYPAL_PURCHASE; ?>',data);
     }// if(gTagEl){
 </script>
 <?php
