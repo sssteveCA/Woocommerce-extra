@@ -92,6 +92,9 @@ function we_send_order_data(){
 <script>
     var data = <?php echo json_encode($data); ?>;
     console.log(data);
+    //var gTagEl = document.querySelector("script[src^='<?php //echo C::FILE_GTAG; ?>']");
+    var gTagEl = document.getElementById(<?php echo C::GTAG_ID; ?>);
+    console.log(gTagEl);
 </script>
 <?php
     }//if($count > 0){
