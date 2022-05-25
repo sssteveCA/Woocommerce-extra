@@ -14,7 +14,7 @@ require_once('interfaces/constants.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
 
-$logDir = plugin_dir_url(__FILE__).C::FILE_LOG;
+$logDir = plugin_dir_path(__FILE__).C::FILE_LOG;
 
 register_activation_hook(__FILE__,'we_activation');
 function we_activation(){
@@ -33,7 +33,7 @@ function we_get_order_info(){
         //Order received page
         global $wp,$logDir;
         file_put_contents($logDir,"Wp object => ".var_export($wp,true)."\r\n",FILE_APPEND);
-        $current_order_id = intval(str_replace('checkout/order-received','',$wp->request));
+        $current_order_id = intval(str_replace(C::REQ_ORDER_RECEIVED,'',$wp->request));
         file_put_contents($logDir,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
         file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
     }
