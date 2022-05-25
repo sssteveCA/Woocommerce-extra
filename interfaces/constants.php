@@ -11,6 +11,9 @@ interface Constants{
     //Endpoint
     const ENDPOINT_ORDER_RECEIVED = 'order-received';
 
+    //Errors
+    const ERR_WOOCOMMERCE_NOT_FOUND = 'Installa e attiva Woocommerce per utilizzare questo plugin';
+
     //Files
     const FILE_LOG = "log.txt";
 
