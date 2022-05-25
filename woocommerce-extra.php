@@ -16,6 +16,8 @@ use WoocommerceExtra\Interfaces\Constants as C;
 
 $logDir = plugin_dir_path(__FILE__).C::FILE_LOG;
 $current_order_id = 0;
+$wc_order = null; //Woocommerce order instance
+$data = array(); //Data needed from current order
 
 register_activation_hook(__FILE__,'we_activation');
 function we_activation(){
@@ -38,6 +40,28 @@ function we_get_order_info(){
         $current_order_id = intval(str_replace(C::REQ_ORDER_RECEIVED,'',$wp->request));
         //file_put_contents($logDir,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
         file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
+        get_order_info($current_order_id);
     }
+}
+
+//Get order info from current order id
+function get_order_info($order_id){
+    global $wc_order,$logDir;
+    $wc_order = new WC_Order($order_id);
+    file_put_contents($logDir,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
+    set_array_data();
+}
+
+function set_array_data(){
+    global $wc_order;
+    if($wc_order != null){
+        global $data,$logDir;
+        $data['currency'] = $wc_order->get_currency();
+        $data['shipping'] = $wc_order->get_total_shipping();
+        $data['tax'] = $wc_order->get_taxes();
+        $data['total'] = $wc_order->get_total();
+        file_put_contents($logDir,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        //WC_Order object instantiated
+    }//if($wc_order != null){
 }
 ?>
