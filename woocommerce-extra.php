@@ -40,7 +40,7 @@ function we_get_order_id(){
         //file_put_contents($logDir,"Wp object => ".var_export($wp,true)."\r\n",FILE_APPEND);
         $current_order_id = intval(str_replace(C::REQ_ORDER_RECEIVED,'',$wp->request));
         //file_put_contents($logDir,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
-        file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
         we_get_order_info($current_order_id);
     }
 }
@@ -61,23 +61,23 @@ function we_set_array_data(){
         global $data,$logDir;
         $data['currency'] = $wc_order->get_currency();
         $products = $wc_order->get_items();
-        $data['products'] = array();
+        $data['items'] = array();
         $i = 0;
         foreach($products as $product){
-            $data['id'] = $product['product_id'];
-            $wc_product = new WC_Product($data['id']);
-            $data['products'][$i]['categories'] = strip_tags($wc_product->get_categories());
-            $data['products'][$i]['name'] = $wc_product->get_name();
-            $data['products'][$i]['price'] = $wc_product->get_price();
-            $data['products'][$i]['quantity'] = $product['quantity'];
-            $data['products'][$i]['total'] = $product['total'];
+            $data['items'][$i]['id'] = $product['product_id'];
+            $wc_product = new WC_Product($data['items'][$i]['id']);
+            //$data['items'][$i]['categories'] = strip_tags($wc_product->get_categories());
+            $data['items'][$i]['name'] = $wc_product->get_name();
+            $data['items'][$i]['price'] = $wc_product->get_price();
+            $data['items'][$i]['quantity'] = $product['quantity'];
+            $data['items'][$i]['total'] = $product['total'];
             $i++;
         }
         $data['shipping'] = $wc_order->get_total_shipping();
-        $data['tax'] = $wc_order->get_tax_totals();
-        $data['total'] = $wc_order->get_total();
+        //$data['tax'] = $wc_order->get_tax_totals();
+        $data['value'] = $wc_order->get_total();
         $data['transaction_id'] = $wc_order->get_transaction_id();
-        file_put_contents($logDir,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logDir,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
     }//if($wc_order != null){
 }
 
@@ -91,10 +91,21 @@ function we_send_order_data(){
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
-    console.log(data);
-    //var gTagEl = document.querySelector("script[src^='<?php //echo C::FILE_GTAG; ?>']");
-    var gTagEl = document.getElementById(<?php echo C::GTAG_ID; ?>);
+    //console.log(data);
+    //var gTagEl = document.querySelector("script[id='<?php echo C::ELEMENTID_GTAG; ?>']");
+    //var gTagEl = document.getElementById('<?php //echo C::ELEMENTID_GTAG; ?>');
+    var gTagEl = document.querySelectorAll('script#google-tag-manager-js');
     console.log(gTagEl);
+    if(gTagEl){
+        gTagEl[0].addEventListener('load',()=>{
+                console.log("gTagEl loaded");
+        });
+        gTagEl[0].addEventListener('error',()=>{
+            console.warn("gTagEl error");
+        });
+        //Send object to Google Analytics
+        gtag('event','paypal_purchase',data);
+    }// if(gTagEl){
 </script>
 <?php
     }//if($count > 0){
