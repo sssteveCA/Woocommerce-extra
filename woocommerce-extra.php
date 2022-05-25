@@ -26,4 +26,16 @@ function we_activation(){
         // WooCommerce is NOT enabled!
     }
 }
+
+add_action('wp_head','we_get_order_info');
+function we_get_order_info(){
+    if(is_wc_endpoint_url(C::ENDPOINT_ORDER_RECEIVED)){
+        //Order received page
+        global $wp,$logDir;
+        file_put_contents($logDir,"Wp object => ".var_export($wp,true)."\r\n",FILE_APPEND);
+        $current_order_id = intval(str_replace('checkout/order-received','',$wp->request));
+        file_put_contents($logDir,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
+        file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
+    }
+}
 ?>
