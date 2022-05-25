@@ -31,8 +31,9 @@ function we_activation(){
     }
 }
 
-add_action('wp_head','we_get_order_info');
-function we_get_order_info(){
+//Get order id from URL
+add_action('wp_head','we_get_order_id');
+function we_get_order_id(){
     if(is_wc_endpoint_url(C::ENDPOINT_ORDER_RECEIVED)){
         //Order received page
         global $wp,$logDir,$current_order_id;
@@ -40,22 +41,23 @@ function we_get_order_info(){
         $current_order_id = intval(str_replace(C::REQ_ORDER_RECEIVED,'',$wp->request));
         //file_put_contents($logDir,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
         file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
-        get_order_info($current_order_id);
+        we_get_order_info($current_order_id);
     }
 }
 
 //Get order info from current order id
-function get_order_info($order_id){
+function we_get_order_info($order_id){
     global $wc_order,$logDir;
     $wc_order = new WC_Order($order_id);
     //file_put_contents($logDir,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
-    set_array_data();
+    we_set_array_data();
 }
 
 //Assign the needed order data to $data array
-function set_array_data(){
+function we_set_array_data(){
     global $wc_order;
     if($wc_order != null){
+        //WC_Order object instantiated
         global $data,$logDir;
         $data['currency'] = $wc_order->get_currency();
         $products = $wc_order->get_items();
@@ -64,20 +66,34 @@ function set_array_data(){
         foreach($products as $product){
             $data['id'] = $product['product_id'];
             $wc_product = new WC_Product($data['id']);
-            $data['products'][$i]['categories'] = $wc_product->get_categories();
+            $data['products'][$i]['categories'] = strip_tags($wc_product->get_categories());
             $data['products'][$i]['name'] = $wc_product->get_name();
             $data['products'][$i]['price'] = $wc_product->get_price();
             $data['products'][$i]['quantity'] = $product['quantity'];
             $data['products'][$i]['total'] = $product['total'];
-            $data['products'][$i]['total_tax'] = $product['total_tax'];
-            $data['products'][$i][''] = '';
             $i++;
         }
         $data['shipping'] = $wc_order->get_total_shipping();
-        $data['tax'] = $wc_order->get_taxes();
+        $data['tax'] = $wc_order->get_tax_totals();
         $data['total'] = $wc_order->get_total();
+        $data['transaction_id'] = $wc_order->get_transaction_id();
         file_put_contents($logDir,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
-        //WC_Order object instantiated
     }//if($wc_order != null){
+}
+
+//Send order data to Google Analytics
+add_action('wp_footer','we_send_order_data');
+function we_send_order_data(){
+    global $data;
+    $count = count($data);
+    if($count > 0){
+        //Array is not empty
+?>
+<script>
+    var data = <?php echo json_encode($data); ?>;
+    console.log(data);
+</script>
+<?php
+    }//if($count > 0){
 }
 ?>
