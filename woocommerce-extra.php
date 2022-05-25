@@ -92,7 +92,7 @@ function we_send_order_data(){
 <script>
     var data = <?php echo json_encode($data); ?>;
     //console.log(data);
-    var gTagEl = document.querySelectorAll('<?php C::ELEMENT_ID_GTAG; ?>');
+    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
     //console.log(gTagEl);
     if(gTagEl){
         gTagEl[0].addEventListener('load',()=>{
