@@ -48,15 +48,31 @@ function we_get_order_info(){
 function get_order_info($order_id){
     global $wc_order,$logDir;
     $wc_order = new WC_Order($order_id);
-    file_put_contents($logDir,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
+    //file_put_contents($logDir,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
     set_array_data();
 }
 
+//Assign the needed order data to $data array
 function set_array_data(){
     global $wc_order;
     if($wc_order != null){
         global $data,$logDir;
         $data['currency'] = $wc_order->get_currency();
+        $products = $wc_order->get_items();
+        $data['products'] = array();
+        $i = 0;
+        foreach($products as $product){
+            $data['id'] = $product['product_id'];
+            $wc_product = new WC_Product($data['id']);
+            $data['products'][$i]['categories'] = $wc_product->get_categories();
+            $data['products'][$i]['name'] = $wc_product->get_name();
+            $data['products'][$i]['price'] = $wc_product->get_price();
+            $data['products'][$i]['quantity'] = $product['quantity'];
+            $data['products'][$i]['total'] = $product['total'];
+            $data['products'][$i]['total_tax'] = $product['total_tax'];
+            $data['products'][$i][''] = '';
+            $i++;
+        }
         $data['shipping'] = $wc_order->get_total_shipping();
         $data['tax'] = $wc_order->get_taxes();
         $data['total'] = $wc_order->get_total();
