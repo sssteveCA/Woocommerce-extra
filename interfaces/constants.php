@@ -6,6 +6,7 @@ namespace WoocommerceExtra\Interfaces;
 interface Constants{
 
     //Directories
+    const DIR_JSON = "/json";
     const DIR_PLUGIN = "/woocommerce-extra";
 
     //Endpoint
