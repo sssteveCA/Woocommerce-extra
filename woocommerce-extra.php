@@ -11,11 +11,11 @@
  */
 
 require_once('interfaces/constants.php');
-require_once('interfaces/catbreadcrumberrors.php');
-require_once('classes/catbreadcrumb.php');
+require_once('interfaces/productbreadcrumberrors.php');
+require_once('classes/productbreadcrumb.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
-use WoocommerceExtra\Classes\CatBreadcrumb;
+use WoocommerceExtra\Classes\ProductBreadcrumb;
 
 $logFile = plugin_dir_path(__FILE__).C::FILE_LOG;
 $current_order_id = 0;
@@ -44,7 +44,7 @@ function we_product_categories_breadcrumb(){
         'logFile' => $logFile
     ];
     try{
-       $breadcrumb = new CatBreadcrumb($data); 
+       $breadcrumb = new ProductBreadcrumb($data); 
     }
     catch(Exception $e){
         file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);
