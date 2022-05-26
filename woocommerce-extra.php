@@ -11,6 +11,7 @@
  */
 
 require_once('interfaces/constants.php');
+require_once('interfaces/catbreadcrumberrors.php');
 require_once('classes/catbreadcrumb.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
@@ -38,9 +39,12 @@ add_action('woocommerce_before_single_product','we_product_categories_breadcrumb
 function we_product_categories_breadcrumb(){
     global $logFile,$product;
     //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
-    $categories = $product->get_categories();
+    $data = [
+        'categories' => $product->get_categories(),
+        'logFile' => $logFile
+    ];
     try{
-       $breadcrumb = new CatBreadcrumb($categories); 
+       $breadcrumb = new CatBreadcrumb($data); 
     }
     catch(Exception $e){
         file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);

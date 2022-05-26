@@ -10,12 +10,13 @@ class CatBreadcrumb implements C,Cbe{
     private string $categoriesStr; //Categories string from product object
     private array $categoriesList = array(); //Categories list
     private array $urlList = array(); //Categories URL page
+    private string $logFile; //Filesystem path of log file
     private static $regex = '/((?<=href=")([^"]+))*((?<=href=")([^"]+))/i'; //Capture URL in string
-    private static $logFile = C::FILE_LOG;
 
-    public function __construct(string $categoriesStr)
+    public function __construct(array $data)
     {
-        $this->categoriesStr = $categoriesStr;
+        $this->categoriesStr = $data['categoriesStr'];
+        $this->logFile = isset($data['logFile']) ? $data['logFile'] : C::FILE_LOG;
         $this->setCategoriesList();
         if(!$this->setUrlList())throw new \Exception(Cbe::INCORRECTPATTERN_EXC);
     }
@@ -27,6 +28,9 @@ class CatBreadcrumb implements C,Cbe{
     private function setUrlList(): bool{
         $ok = false;
         $match = preg_match_all(CatBreadcrumb::$regex,$this->categoriesStr,$matches);
+        file_put_contents(CatBreadcrumb::$logFile,"match => ".var_export($match,true)."\r\n",FILE_APPEND);
+        file_put_contents(CatBreadcrumb::$logFile,"categoriesStr => ".var_export($this->categoriesStr,true)."\r\n",FILE_APPEND);
+        file_put_contents(CatBreadcrumb::$logFile,"matches => ".var_export($matches,true)."\r\n",FILE_APPEND);
         if($match){
             //String passed is valid
             $this->urlList = $matches[0];
