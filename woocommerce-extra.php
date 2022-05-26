@@ -68,14 +68,14 @@ function we_set_array_data(){
             $wc_product = new WC_Product($data['items'][$i]['id']);
             //$data['items'][$i]['categories'] = strip_tags($wc_product->get_categories());
             $data['items'][$i]['name'] = $wc_product->get_name();
-            $data['items'][$i]['price'] = $wc_product->get_price();
+            $data['items'][$i]['price'] = floatval($wc_product->get_price());
             $data['items'][$i]['quantity'] = $product['quantity'];
-            $data['items'][$i]['total'] = $product['total'];
+            $data['items'][$i]['total'] = floatval($product['total']);
             $i++;
         }
         $data['shipping'] = $wc_order->get_total_shipping();
         //$data['tax'] = $wc_order->get_tax_totals();
-        $data['value'] = $wc_order->get_total();
+        $data['value'] = floatval($wc_order->get_total());
         $data['transaction_id'] = $wc_order->get_transaction_id();
         //file_put_contents($logDir,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
     }//if($wc_order != null){
@@ -108,5 +108,31 @@ function we_send_order_data(){
 </script>
 <?php
     }//if($count > 0){
+}
+
+//Send data to Google Analytics if a Paypal button is clicked
+add_action('wp_footer','we_send_paypal_button_click');
+function we_send_paypal_button_click(){
+    global $logDir,$wp;
+    file_put_contents($logDir,"Wp => ".var_export($wp,true)."\r\n",FILE_APPEND);
+    if($wp->request == C::PAGES_CART){
+        //User is in the cart page
+?>
+<script>
+    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
+    //console.log(gTagEl);
+    if(gTagEl){
+        gTagEl[0].addEventListener('load',()=>{
+                //console.log("gTagEl loaded");
+        });
+        gTagEl[0].addEventListener('error',()=>{
+            //console.warn("gTagEl error");
+        });
+        //Send object to Google Analytics
+    }// if(gTagEl){
+</script>
+<?php
+        
+    }//if($wp->request == C::PAGES_CART){
 }
 ?>

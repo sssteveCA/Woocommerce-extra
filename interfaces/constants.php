@@ -21,10 +21,18 @@ interface Constants{
     const FILE_LOG = "log.txt";
 
     //Google Analytics events
+    const GA_EVENT_PAYPAL_3_RATES_BUTTON = 'paypal_3_rates_button';
+    const GA_EVENT_PAYPAL_BUTTON = 'paypal_button';
     const GA_EVENT_WC_PURCHASE = 'wc_purchase';
+
+    //Pages
+    const PAGES_CART = 'carrello';
 
     //Requests
     const REQ_ORDER_RECEIVED = 'pagamento/order-received/';
+
+    //Selectors
+    const SEL_PAYPAL_BUTTON = '#buttons-container > div';
 
 }
 ?>
