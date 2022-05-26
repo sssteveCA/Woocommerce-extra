@@ -16,17 +16,17 @@ require_once('classes/catbreadcrumb.php');
 use WoocommerceExtra\Interfaces\Constants as C;
 use WoocommerceExtra\Classes\CatBreadcrumb;
 
-$logDir = plugin_dir_path(__FILE__).C::FILE_LOG;
+$logFile = plugin_dir_path(__FILE__).C::FILE_LOG;
 $current_order_id = 0;
 $wc_order = null; //Woocommerce order instance
 $data = array(); //Data needed from current order
 
 register_activation_hook(__FILE__,'we_activation');
 function we_activation(){
-    global $logDir;
+    global $logFile;
     if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
         // Yes, WooCommerce is enabled
-        //file_put_contents($logDir,"Woocommerce attivo\r\n",FILE_APPEND);     
+        //file_put_contents($logFile,"Woocommerce attivo\r\n",FILE_APPEND);     
     } else {
         // WooCommerce is NOT enabled!
         wp_die(C::ERR_WOOCOMMERCE_NOT_FOUND);
@@ -36,10 +36,16 @@ function we_activation(){
 //Add categories breadcrumb in product page
 add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
 function we_product_categories_breadcrumb(){
-    global $logDir,$product;
-    //file_put_contents($logDir,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
+    global $logFile,$product;
+    //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
     $categories = $product->get_categories();
-
+    try{
+       $breadcrumb = new CatBreadcrumb($categories); 
+    }
+    catch(Exception $e){
+        file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);
+    }
+    
 }
 
 //Get order id from URL
@@ -47,20 +53,20 @@ add_action('wp_head','we_get_order_id');
 function we_get_order_id(){
     if(is_wc_endpoint_url(C::ENDPOINT_ORDER_RECEIVED)){
         //Order received page
-        global $wp,$logDir,$current_order_id;
-        //file_put_contents($logDir,"Wp object => ".var_export($wp,true)."\r\n",FILE_APPEND);
+        global $wp,$logFile,$current_order_id;
+        //file_put_contents($logFile,"Wp object => ".var_export($wp,true)."\r\n",FILE_APPEND);
         $current_order_id = intval(str_replace(C::REQ_ORDER_RECEIVED,'',$wp->request));
-        //file_put_contents($logDir,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
-        //file_put_contents($logDir,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
         we_get_order_info($current_order_id);
     }
 }
 
 //Get order info from current order id
 function we_get_order_info($order_id){
-    global $wc_order,$logDir;
+    global $wc_order,$logFile;
     $wc_order = new WC_Order($order_id);
-    //file_put_contents($logDir,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
+    //file_put_contents($logFile,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
     we_set_array_data();
 }
 
@@ -69,7 +75,7 @@ function we_set_array_data(){
     global $wc_order;
     if($wc_order != null){
         //WC_Order object instantiated
-        global $data,$logDir;
+        global $data,$logFile;
         $data['currency'] = $wc_order->get_currency();
         $products = $wc_order->get_items();
         $data['items'] = array();
@@ -88,7 +94,7 @@ function we_set_array_data(){
         //$data['tax'] = $wc_order->get_tax_totals();
         $data['value'] = floatval($wc_order->get_total());
         $data['transaction_id'] = $wc_order->get_transaction_id();
-        //file_put_contents($logDir,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
     }//if($wc_order != null){
 }
 
@@ -124,8 +130,8 @@ function we_send_order_data(){
 //Send data to Google Analytics if a Paypal button is clicked
 add_action('wp_footer','we_send_paypal_button_click');
 function we_send_paypal_button_click(){
-    global $logDir,$wp;
-    //file_put_contents($logDir,"Wp => ".var_export($wp,true)."\r\n",FILE_APPEND);
+    global $logFile,$wp;
+    //file_put_contents($logFile,"Wp => ".var_export($wp,true)."\r\n",FILE_APPEND);
     if($wp->request == C::PAGES_CART){
         //User is in the cart page
 ?>
