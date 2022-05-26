@@ -32,8 +32,7 @@ interface Constants{
     const REQ_ORDER_RECEIVED = 'pagamento/order-received/';
 
     //Selectors
-    const SEL_PAYPAL_3RATES_BUTTON = '#buttons-container > div >div:nth-child(2)';
-    const SEL_PAYPAL_BUTTON = '#buttons-container > div >div:first-child';
-
+    const SEL_PAYPAL_3RATES_BUTTON = '#buttons-container > div';
+    const SEL_PAYPAL_BUTTON = '#buttons-container > div';
 }
 ?>

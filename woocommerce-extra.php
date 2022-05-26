@@ -31,6 +31,12 @@ function we_activation(){
     }
 }
 
+//Add categories breadcrumb in product page
+add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
+function we_product_categories_breadcrumb(){
+    echo "Ciao!!!!!<br><br>";
+}
+
 //Get order id from URL
 add_action('wp_head','we_get_order_id');
 function we_get_order_id(){
@@ -128,10 +134,10 @@ function we_send_paypal_button_click(){
         gTagEl[0].addEventListener('error',()=>{
             //console.warn("gTagEl error");
         });
-        var paypal_button = document.querySelector('<?php echo C::SEL_PAYPAL_BUTTON; ?>');
-        var paypal_3rates_button = document.querySelector('<?php echo C::SEL_PAYPAL_3RATES_BUTTON; ?>');
-        console.log(paypal_button);
-        console.log(paypal_3rates_button);
+        window.addEventListener('load', ()=>{
+            var button_container = document.getElementById('buttons-container');
+            console.log(button_container);
+        });//window.addEventListener('load', ()=>{   
     }// if(gTagEl){
 </script>
 <?php
