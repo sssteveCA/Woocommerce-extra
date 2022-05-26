@@ -11,8 +11,10 @@
  */
 
 require_once('interfaces/constants.php');
+require_once('classes/catbreadcrumb.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
+use WoocommerceExtra\Classes\CatBreadcrumb;
 
 $logDir = plugin_dir_path(__FILE__).C::FILE_LOG;
 $current_order_id = 0;
@@ -34,7 +36,10 @@ function we_activation(){
 //Add categories breadcrumb in product page
 add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
 function we_product_categories_breadcrumb(){
-    echo "Ciao!!!!!<br><br>";
+    global $logDir,$product;
+    //file_put_contents($logDir,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
+    $categories = $product->get_categories();
+
 }
 
 //Get order id from URL
