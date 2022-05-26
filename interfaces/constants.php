@@ -26,6 +26,7 @@ interface Constants{
     const GA_EVENT_WC_PURCHASE = 'wc_purchase';
 
     //Pages
+    const PAGES_HOME = 'https://postoinformatico.altervista.org/';
     const PAGES_CART = 'carrello';
 
     //Requests

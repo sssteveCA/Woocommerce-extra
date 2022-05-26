@@ -38,6 +38,7 @@ function we_activation(){
 add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
 function we_product_categories_breadcrumb(){
     global $logFile,$product;
+    $content = "";
     //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
     $data = [
         'categories' => $product->get_categories(),
@@ -45,10 +46,12 @@ function we_product_categories_breadcrumb(){
     ];
     try{
        $breadcrumb = new ProductBreadcrumb($data); 
+       $content = $breadcrumb->getBreadcrumb();
     }
     catch(Exception $e){
         file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);
     }
+    echo $content;
     
 }
 
@@ -88,10 +91,12 @@ function we_set_array_data(){
             $data['items'][$i]['id'] = $product['product_id'];
             $wc_product = new WC_Product($data['items'][$i]['id']);
             //$data['items'][$i]['categories'] = strip_tags($wc_product->get_categories());
-            $data['items'][$i]['name'] = $wc_product->get_name();
-            $data['items'][$i]['price'] = floatval($wc_product->get_price());
-            $data['items'][$i]['quantity'] = $product['quantity'];
-            $data['items'][$i]['total'] = floatval($product['total']);
+            $data['items'][] = array(
+                'name' => $wc_product->get_name(),
+                'price' => floatval($wc_product->get_price()),
+                'quantity' => $product['quantity'],
+                'total' => floatval($product['total'])
+            );
             $i++;
         }
         $data['shipping'] = $wc_order->get_total_shipping();
