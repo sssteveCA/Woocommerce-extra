@@ -114,7 +114,7 @@ function we_send_order_data(){
 add_action('wp_footer','we_send_paypal_button_click');
 function we_send_paypal_button_click(){
     global $logDir,$wp;
-    file_put_contents($logDir,"Wp => ".var_export($wp,true)."\r\n",FILE_APPEND);
+    //file_put_contents($logDir,"Wp => ".var_export($wp,true)."\r\n",FILE_APPEND);
     if($wp->request == C::PAGES_CART){
         //User is in the cart page
 ?>
@@ -128,7 +128,10 @@ function we_send_paypal_button_click(){
         gTagEl[0].addEventListener('error',()=>{
             //console.warn("gTagEl error");
         });
-        //Send object to Google Analytics
+        var paypal_button = document.querySelector('<?php echo C::SEL_PAYPAL_BUTTON; ?>');
+        var paypal_3rates_button = document.querySelector('<?php echo C::SEL_PAYPAL_3RATES_BUTTON; ?>');
+        console.log(paypal_button);
+        console.log(paypal_3rates_button);
     }// if(gTagEl){
 </script>
 <?php
