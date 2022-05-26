@@ -91,7 +91,8 @@ function we_send_order_data(){
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
-    //console.log(data);
+    var jsonData = JSON.stringify(data);
+    console.log(jsonData);
     var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
     //console.log(gTagEl);
     if(gTagEl){
@@ -102,7 +103,7 @@ function we_send_order_data(){
             //console.warn("gTagEl error");
         });
         //Send object to Google Analytics
-        gtag('event','<?php echo C::GA_EVENT_PAYPAL_PURCHASE; ?>',data);
+        gtag('event','<?php echo C::GA_EVENT_WC_PURCHASE; ?>',data);
     }// if(gTagEl){
 </script>
 <?php

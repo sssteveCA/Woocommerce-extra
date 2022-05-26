@@ -21,7 +21,7 @@ interface Constants{
     const FILE_LOG = "log.txt";
 
     //Google Analytics events
-    const GA_EVENT_PAYPAL_PURCHASE = 'paypal_purchase';
+    const GA_EVENT_WC_PURCHASE = 'wc_purchase';
 
     //Requests
     const REQ_ORDER_RECEIVED = 'pagamento/order-received/';
