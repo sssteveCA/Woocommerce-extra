@@ -71,11 +71,12 @@ function we_edit_tabs($tabs){
 //Edit product description tab
 function we_edit_description_tab(){
     global $logFile,$pluginDir,$product;
-    file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
+    //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
     //echo 'Buongiorno!';
+    $id = $product->get_id(); //Get Product id to choose which JSON open
     $data = [
         'logFile' => $logFile,
-        'path' => $pluginDir.C::DIR_JSON."/product_1.json"
+        'path' => $pluginDir.C::DIR_JSON."/product_{$id}.json"
     ];
     file_put_contents($logFile,"Arraydata => ".var_export($data,true)."\r\n",FILE_APPEND);
     try{

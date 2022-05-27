@@ -9,6 +9,7 @@ use WoocommerceExtra\Interfaces\Constants as C;
 class ProductInfo implements Pie,C{
     private string $path; //Filesystem path of the json file
     private string $content; //Entire file content
+    private array $arrayContent; //JSON string decoded into array
     private string $logFile; //Filesystem path of log file
 
     public function __construct(array $data)
@@ -18,9 +19,11 @@ class ProductInfo implements Pie,C{
         if(!$this->path)throw new \Exception(Pie::PATHNOTSPECIFIED_EXC);
         if(!$this->exists())throw new \Exception(Pie::FILENOTEXISTS_EXC);
         if(!$this->jsonFile())throw new \Exception(Pie::INVALIDTYPE_EXC);
+        if(!$this->genHtml())throw new \Exception(Pie::UNEXPECTEDCONTENT_EXC);
     }
 
     public function getPath(): string{return $this->path;}
+    public function getArrayContent(): array{return $this->arrayContent;}
     public function getContent(): string{return $this->content;}
 
     //Check if specified file exists
@@ -34,6 +37,15 @@ class ProductInfo implements Pie,C{
         return $exists;
     }
 
+    //Generate HTML table from array
+    private function genHtml(): bool{
+        $gen = false;
+        $this->arrayContent = json_decode($this->content,true);
+        file_put_contents($this->logFile,"Array content => ".var_export($this->arrayContent,true)."\r\n",FILE_APPEND);
+        $gen = true;
+        return $gen;
+    }
+
     //Check if file is JSON type
     private function jsonFile(): bool{
         $json = false;
@@ -42,10 +54,11 @@ class ProductInfo implements Pie,C{
         if($type == 'application/json'){
             //File type is JSON
             $this->content = file_get_contents($this->path);
-            file_put_contents($this->logFile,"File content =>".var_export($this->content,true)."\r\n",FILE_APPEND);
+            //file_put_contents($this->logFile,"File content =>".var_export($this->content,true)."\r\n",FILE_APPEND);
             $json = true;
         }//if($type == 'application/json'){
         return $json;
     }
+
 }
 ?>
