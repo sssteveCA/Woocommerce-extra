@@ -41,6 +41,8 @@ class ProductInfo implements Pie,C{
         file_put_contents($this->logFile,"Mime => {$type}\r\n",FILE_APPEND);
         if($type == 'application/json'){
             //File type is JSON
+            $this->content = file_get_contents($this->path);
+            file_put_contents($this->logFile,"File content =>".var_export($this->content,true)."\r\n",FILE_APPEND);
             $json = true;
         }//if($type == 'application/json'){
         return $json;

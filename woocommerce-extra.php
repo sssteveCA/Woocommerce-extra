@@ -12,12 +12,16 @@
 
 require_once('interfaces/constants.php');
 require_once('interfaces/productbreadcrumberrors.php');
+require_once('interfaces/productinfoerrors.php');
 require_once('classes/productbreadcrumb.php');
+require_once('classes/productinfo.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
 use WoocommerceExtra\Classes\ProductBreadcrumb;
+use WoocommerceExtra\Classes\ProductInfo;
 
-$logFile = plugin_dir_path(__FILE__).C::FILE_LOG;
+$pluginDir = plugin_dir_path(__FILE__);
+$logFile = $pluginDir.C::FILE_LOG;
 $current_order_id = 0;
 $wc_order = null; //Woocommerce order instance
 $data = array(); //Data needed from current order
@@ -56,11 +60,30 @@ function we_product_categories_breadcrumb(){
 }
 
 //Edit product description tab content
-add_filter('woocommerce_after_single_product','we_edit_description');
-function we_edit_description($tabs){
+add_filter('woocommerce_product_tabs','we_edit_tabs',98);
+function we_edit_tabs($tabs){
     global $logFile,$product;
-    file_put_contents($logFile,"Content => ".var_export($tabs['description'],true)."\r\n",FILE_APPEND);
+    //file_put_contents($logFile,"Content => ".var_export($tabs['description'],true)."\r\n",FILE_APPEND);
+    $tabs['description']['callback'] = 'we_edit_description_tab';
     return $tabs;
+}
+
+//Edit product description tab
+function we_edit_description_tab(){
+    global $logFile,$pluginDir,$product;
+    file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
+    //echo 'Buongiorno!';
+    $data = [
+        'logFile' => $logFile,
+        'path' => $pluginDir.C::DIR_JSON."/product_1.json"
+    ];
+    file_put_contents($logFile,"Arraydata => ".var_export($data,true)."\r\n",FILE_APPEND);
+    try{
+       $pi = new ProductInfo($data); 
+    }
+    catch(Exception $e){
+        file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);
+    }
 }
 
 //Get order id from URL
