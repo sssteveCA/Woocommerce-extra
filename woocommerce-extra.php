@@ -55,6 +55,14 @@ function we_product_categories_breadcrumb(){
     
 }
 
+//Edit product description tab content
+add_filter('woocommerce_after_single_product','we_edit_description');
+function we_edit_description($tabs){
+    global $logFile,$product;
+    file_put_contents($logFile,"Content => ".var_export($tabs['description'],true)."\r\n",FILE_APPEND);
+    return $tabs;
+}
+
 //Get order id from URL
 add_action('wp_head','we_get_order_id');
 function we_get_order_id(){

@@ -16,11 +16,23 @@ class ProductInfo implements Pie,C{
         $this->logFile = isset($data['logFile']) ? $data['logFile'] : C::FILE_LOG;
         $this->path = isset($data['path'])? $data['path']: null;
         if(!$this->path)throw new \Exception(Pie::PATHNOTSPECIFIED_EXC);
+        if(!$this->exists())throw new \Exception(Pie::FILENOTEXISTS_EXC);
         if(!$this->jsonFile())throw new \Exception(Pie::INVALIDTYPE_EXC);
     }
 
     public function getPath(): string{return $this->path;}
     public function getContent(): string{return $this->content;}
+
+    //Check if specified file exists
+    private function exists(): bool{
+        $exists = false;
+        $ex1 = file_exists($this->path);
+        $ex2 = is_file($this->path);
+        if($ex1 && $ex2){
+            $exists = true;
+        }
+        return $exists;
+    }
 
     //Check if file is JSON type
     private function jsonFile(): bool{
