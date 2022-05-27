@@ -1,0 +1,20 @@
+{
+    "title": "Acer Predator Helios 300",
+    "description": [
+        {
+            "thead": "CARATTERISTICHE TECNICHE",
+            "tbody" : {
+                "Marchio": "Acer",
+                "Serie": "PREDATOR HELIOS 300",
+                "Dimensioni schermo": "15.6 Pollici",
+                "Colore": "Nero",
+                "Dimensioni disco rigido": "512 GB",
+                "Modello CPU": "Core i7",
+                "Sistema operativo": "Windows 11 Pro",
+                "Scheda grafica": "Nvidia Rtx 3070 8Gb",
+                "Coprocessore grafico": "NVIDIA RTX 3070 8GB",
+                "Velocità CPU": "4.6 Ghz"
+            }
+        }
+    ]
+}
