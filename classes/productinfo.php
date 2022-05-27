@@ -43,11 +43,13 @@ class ProductInfo implements Pie,C{
     private function genHtml(): bool{
         $gen = true;
         $this->arrayContent = json_decode($this->content,true);
-        file_put_contents($this->logFile,"Array content => ".var_export($this->arrayContent,true)."\r\n",FILE_APPEND);
+        //file_put_contents($this->logFile,"Array content => ".var_export($this->arrayContent,true)."\r\n",FILE_APPEND);
         $this->html = "<h2>Descrizione</h2>";
         foreach($this->arrayContent as $table){
             $thead = isset($table['thead']); //Check if $table has 'thead' key with a set value
-            $tbody = (is_array($table['tbody']) && !empty($table['body'])); //Check if tbody property is an array and if it's not empty
+            $tbody = (is_array($table['tbody']) && !empty($table['tbody'])); //Check if tbody property is an array and if it's not empty
+            /* file_put_contents($this->logFile,"thead => ".var_export($thead,true)."\r\n",FILE_APPEND);
+            file_put_contents($this->logFile,"tbody => ".var_export($tbody,true)."\r\n",FILE_APPEND); */
             if($thead && $tbody){
                 //Correct format
                 $this->html .= '<div><table class="table">';
@@ -76,7 +78,7 @@ class ProductInfo implements Pie,C{
     private function jsonFile(): bool{
         $json = false;
         $type = mime_content_type($this->path);
-        file_put_contents($this->logFile,"Mime => {$type}\r\n",FILE_APPEND);
+        //file_put_contents($this->logFile,"Mime => {$type}\r\n",FILE_APPEND);
         if($type == 'application/json'){
             //File type is JSON
             $this->content = file_get_contents($this->path);
