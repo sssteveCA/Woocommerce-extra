@@ -45,7 +45,7 @@ class ProductInfo implements Pie,C{
         $this->arrayContent = json_decode($this->content,true);
         //file_put_contents($this->logFile,"Array content => ".var_export($this->arrayContent,true)."\r\n",FILE_APPEND);
         $this->html = "<h2>Descrizione</h2>";
-        foreach($this->arrayContent as $table){
+        foreach($this->arrayContent['description'] as $table){
             $thead = isset($table['thead']); //Check if $table has 'thead' key with a set value
             $tbody = (is_array($table['tbody']) && !empty($table['tbody'])); //Check if tbody property is an array and if it's not empty
             /* file_put_contents($this->logFile,"thead => ".var_export($thead,true)."\r\n",FILE_APPEND);

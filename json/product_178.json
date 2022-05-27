@@ -1,33 +1,36 @@
-[
-    {
-        "thead": "TIPOLOGIA",
-        "tbody": {
-            "Tipologia PC": "Notebook",
-            "Convertibile": "No"
+{
+    "title": "APPLE iPhone 13 128GB Mezzanotte",
+    "description":[
+        {
+            "thead": "TIPOLOGIA",
+            "tbody": {
+                "Tipologia PC": "Notebook",
+                "Convertibile": "No"
+            }
+        },
+        {
+            "thead": "PROCESSORE",
+            "tbody":{
+                "Tipo CPU": "Apple",
+                "Tipo di processore": "Apple M1",
+                "Nome processore": "M1"
+            }
+        },
+        {
+            "thead": "MEMORIA RAM",
+            "tbody":{
+                "Tipo di RAM": "DDR4",
+                "Capacità RAM in GB": 8,
+                "Espandibilità RAM": 8
+            }
+        },
+        {
+            "thead": "HARD DISK",
+            "tbody":{
+                "Hard disk installato": "SSD",
+                "Capacità Hard disk": "256 GB",
+                "Capacità SSD": "256 GB"
+            }
         }
-    },
-    {
-        "thead": "PROCESSORE",
-        "tbody":{
-            "Tipo CPU": "Apple",
-            "Tipo di processore": "Apple M1",
-            "Nome processore": "M1"
-        }
-    },
-    {
-        "thead": "MEMORIA RAM",
-        "tbody":{
-            "Tipo di RAM": "DDR4",
-            "Capacità RAM in GB": 8,
-            "Espandibilità RAM": 8
-        }
-    },
-    {
-        "thead": "HARD DISK",
-        "tbody":{
-            "Hard disk installato": "SSD",
-            "Capacità Hard disk": "256 GB",
-            "Capacità SSD": "256 GB"
-        }
-    }
-]
+    ]
+}

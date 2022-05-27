@@ -75,7 +75,7 @@ function we_edit_description_tab(){
     //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
     //echo 'Buongiorno!';
     $id = $product->get_id(); //Get Product id to choose which JSON open
-    //file_put_contents($logFile,"Product id => ".var_export($id,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"Product id => ".var_export($id,true)."\r\n",FILE_APPEND);
     $data = [
         'logFile' => $logFile,
         'path' => $pluginDir.C::DIR_JSON."/product_{$id}.json"
