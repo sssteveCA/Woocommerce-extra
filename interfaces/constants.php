@@ -29,6 +29,7 @@ interface Constants{
     //Pages
     const PAGES_HOME = 'https://postoinformatico.altervista.org/';
     const PAGES_CART = 'carrello';
+    const PAGES_SHOP = Constants::PAGES_HOME.'/prodotti/';
 
     //Requests
     const REQ_ORDER_RECEIVED = 'pagamento/order-received/';

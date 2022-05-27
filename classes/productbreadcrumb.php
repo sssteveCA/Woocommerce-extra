@@ -12,6 +12,7 @@ class ProductBreadcrumb implements C,Pbe{
     private array $urlList = array(); //Categories URL page
     private string $breadcrumb = ""; //HTML Bootstrap breadcrumb generated
     private string $homepage; //URL homepage
+    private string $shoppage; //URL of the shop page
     private string $logFile; //Filesystem path of log file
     private static $regex = '/((?<=href=")([^"]+))*((?<=href=")([^"]+))/i'; //Capture URL in string
 
@@ -20,6 +21,7 @@ class ProductBreadcrumb implements C,Pbe{
         $this->categoriesStr = $data['categories'];
         $this->logFile = isset($data['logFile']) ? $data['logFile'] : C::FILE_LOG;
         $this->homepage = isset($data['homepage']) ? $data['homepage'] : C::PAGES_HOME;
+        $this->shoppage = isset($data['shoppage']) ? $data['shoppage'] : C::PAGES_SHOP;
         $this->setCategoriesList();
         if(!$this->setUrlList())throw new \Exception(Pbe::INCORRECTPATTERN_EXC);
         $this->setBreadcrumb();
@@ -42,6 +44,7 @@ class ProductBreadcrumb implements C,Pbe{
 <nav aria-label="breadcrumb">
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{$this->homepage}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{$this->shoppage}">Prodotti</a></li>
     {$items}
     </ul>
 </nav>
