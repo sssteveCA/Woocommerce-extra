@@ -1,0 +1,39 @@
+{
+    "title": "SAMSUNG Galaxy A03 Blue",
+    "description":[
+        {
+            "thead": "SISTEMA OPERATIVO",
+            "tbody": {
+                "Sistema operativo": "Android",
+                "Versione sistema operativo": "Android 11"
+            }
+        },
+        {
+            "thead": "MEMORIA",
+            "tbody": {
+                "Capacità interna": "64GB",
+                "Espansione memoria": "Micro SD",
+                "Capacità max espansione": "1000 GB"
+            }
+        },
+        {
+            "thead": "MEMORIA",
+            "tbody":{
+                "Modello": "Galaxy A03",
+                "Processore": "Octa Core",
+                "Modello processore": "Unisoc Ums9230",
+                "Velocità processore(Ghz)": 1.6
+            }
+        },
+        {
+            "thead": "DISPLAY",
+            "tbody":{
+                "Dimensione display(`)": 6.5,
+                "Dimensioni display": "Oltre 6''",
+                "Tipologia schermo": "  TFT",
+                "Risoluzione": "HD+",
+                "Touchscreen": "Sì"
+            }
+        }
+    ]
+}
