@@ -124,24 +124,22 @@ function we_set_array_data(){
         $data['currency'] = $wc_order->get_currency();
         $products = $wc_order->get_items();
         $data['items'] = array();
-        $i = 0;
         foreach($products as $product){
-            $data['items'][$i]['id'] = $product['product_id'];
-            $wc_product = new WC_Product($data['items'][$i]['id']);
+            $wc_product = new WC_Product($product['product_id']);
             //$data['items'][$i]['categories'] = strip_tags($wc_product->get_categories());
             $data['items'][] = array(
+            	'id' => $product['product_id'],
                 'name' => $wc_product->get_name(),
                 'price' => floatval($wc_product->get_price()),
                 'quantity' => $product['quantity'],
                 'total' => floatval($product['total'])
             );
-            $i++;
         }
         $data['shipping'] = $wc_order->get_total_shipping();
         //$data['tax'] = $wc_order->get_tax_totals();
         $data['value'] = floatval($wc_order->get_total());
         $data['transaction_id'] = $wc_order->get_transaction_id();
-        //file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
     }//if($wc_order != null){
 }
 
@@ -155,6 +153,7 @@ function we_send_order_data(){
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
+    console.log(data);
     var jsonData = JSON.stringify(data);
     console.log(jsonData);
     var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
