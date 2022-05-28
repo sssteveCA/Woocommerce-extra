@@ -1,0 +1,49 @@
+{
+    "title": "",
+    "description": [
+        {
+            "thead": "DETTAGLI TECNICI",
+            "tbody": {
+                "Numero processori": 8,
+                "ECC suppotato dal processore": "No",
+                "Uscita audio PC": "No",
+                "Larghezza": "390.0 Millimeter",
+                "Resistenza alla polvere": "No",
+                "WLAN": "Sì",
+                "Supporto 4K attraverso l'adattatore grafico": "No",
+                "Ricarica senza fili": "No",
+                "Connessione al PC": "No",
+                "Profondità": "260.0 Millimeter",
+                "Produttore dei processori": "AMD",
+                "3G": "No",
+                "Connettore dell'antenna FM": "No",
+                "Lettore di schede integrato": "No",
+                "Impermeabilità": "No",
+                "Slot ExpressCard": "No",
+                "Entrata audio PC": "No",
+                "64-Bit Computing": "No",
+                "Airplay": "No",
+                "GLONASS": "No",
+                "Filtro per vento": "No",
+                "Messaggistica istantanea": "No",
+                "FM-Radio": "No",
+                "Comunicazione a corto raggio(NFC)": "No",
+                "Resistente alle vibrazioni": "No",
+                "Copriobiettivo incluso": "No",
+                "Suoneria": "No",
+                "ANT +- capace": "No",
+                "Bluetooth": "Sì",
+                "Snowfest": "No",
+                "GPS": "No",
+                "Numero connettori HDMI": 1,
+                "Mani libere": "No",
+                "Piattaforma": "Playstation 5",
+                "Connettore Lightning": "No",
+                "WLAN Standard": "802.11a, 802.11b, 802.11g",
+                "Equivalenza FSB": "No",
+                "Frequenza del processore": "3.5 Ghz",
+                "Capacità di archiviazione": "825 GB"
+            }
+        }
+    ]
+}
