@@ -136,7 +136,8 @@ function we_set_array_data(){
             );
         }
         $data['shipping'] = $wc_order->get_total_shipping();
-        //$data['tax'] = $wc_order->get_tax_totals();
+        //$data['tax_totals'] = $wc_order->get_tax_totals();
+        $data['tax'] = floatval($wc_order->get_total_tax());
         $data['value'] = floatval($wc_order->get_total());
         $data['transaction_id'] = $wc_order->get_transaction_id();
         file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
@@ -155,8 +156,8 @@ function we_send_order_data(){
 <script>
     var data = <?php echo json_encode($data); ?>;
     console.log(data);
-    var jsonData = JSON.stringify(data);
-    console.log(jsonData);
+    /* var jsonData = JSON.stringify(data);
+    console.log(jsonData); */
     var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
     //console.log(gTagEl);
     if(gTagEl){
