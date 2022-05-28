@@ -1,0 +1,17 @@
+{
+    "title": "HP 15s-fq4017nl Notebook",
+    "description": [
+        {
+            "thead": "CARATTERISTICHE TECNICHE",
+            "tbody": {
+                "Sistema operativo": "Windows 11 Home",
+                "Processore": "ntel® Core™ i5-1155G7 (fino a 4,5 GHz con tecnologia Intel® Turbo Boost, 8 MB di cache L3, 4 core, 8 thread)",
+                "Memoria RAM": "8 GB DDR4-3200 MHz (2 x 4 GB)",
+                "Unità SSD": "512 GB PCIe® NVMe™ M.2",
+                "Display": "Diagonale da 39,6 cm (15,6\"), FHD (1920 x 1080), micro-edge, antiriflesso, 250 nit, 45% NTSC",
+                "Scheda grafica": "Intel® Iris® Xᵉ integrata",
+                "Lettore di impronte digitali": "Sì"
+            }
+        }
+    ]
+}
