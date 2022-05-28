@@ -146,10 +146,11 @@ function we_set_array_data(){
 //Send order data to Google Analytics
 add_action('wp_footer','we_send_order_data');
 function we_send_order_data(){
-    global $data;
+    global $data,$logFile;
     $count = count($data);
     if($count > 0){
         //Array is not empty
+        file_put_contents($logFile,"SERVER => ".var_export($_SERVER,true)."\r\n",FILE_APPEND);
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
