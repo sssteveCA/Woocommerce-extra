@@ -18,7 +18,7 @@ use WoocommerceExtra\Interfaces\Constants as C;
 $pluginDir = plugin_dir_path(__FILE__);
 
 $pluginUrl = dirname(plugin_dir_url(__FILE__));
-$url = $pluginUrl.'/script/remove_from_cart_data.php';
+$url = $pluginUrl.C::DIR_SCRIPT.'/remove_from_cart_data.php';
 $event = C::GA_EVENT_REMOVE_FROM_CART;
 
 $js = <<<JS
