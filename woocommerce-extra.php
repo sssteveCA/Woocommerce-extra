@@ -73,22 +73,25 @@ function we_cart_product_removed($product_key,$cart){
     file_put_contents($logFile,"Removed Data => ".var_export($data,true)."\r\n",FILE_APPEND);
 ?>
 <script>
-    var data = <?php echo json_encode($data); ?>;
-    console.log(data);
-    /* var jsonData = JSON.stringify(data);
-    console.log(jsonData); */
-    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
-    //console.log(gTagEl);
-    if(gTagEl){
-        gTagEl[0].addEventListener('load',()=>{
-                //console.log("gTagEl loaded");
-        });
-        gTagEl[0].addEventListener('error',()=>{
-            //console.warn("gTagEl error");
-        });
-        //Send object to Google Analytics
-        gtag('event','<?php echo C::GA_EVENT_REMOVE_FROM_CART; ?>',data);
-    }// if(gTagEl){
+    window.addEventListener('DOMContentLoaded',()=>{
+        alert("Prodotto rimosso");
+    });
+/*var data = <?php echo json_encode($data); ?>;
+console.log(data);
+/* var jsonData = JSON.stringify(data);
+console.log(jsonData); 
+var gTagEl = document.querySelectorAll('<?php //echo C::ELEMENT_ID_GTAG; ?>');
+console.log(gTagEl);*/
+/*if(gTagEl){
+    gTagEl[0].addEventListener('load',()=>{
+            //console.log("gTagEl loaded");
+    });
+    gTagEl[0].addEventListener('error',()=>{
+        //console.warn("gTagEl error");
+    });
+    //Send object to Google Analytics
+    gtag('event','<?php //echo C::GA_EVENT_REMOVE_FROM_CART; ?>',data);*()
+}// if(gTagEl){
 </script>
 <?php
 }
@@ -185,6 +188,13 @@ function we_send_data_to_ga(){
 </script>
 <?php
     }//if($send_to_ga){
+}
+
+add_action('wp_footer','we_check_remove_products');
+function we_check_remove_products(){
+    if(is_cart()){
+        //If user is in cart page
+    }//if(is_cart()){
 }
 
 ?>
