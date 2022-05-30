@@ -10,13 +10,16 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
+
 require_once('interfaces/constants.php');
 require_once('interfaces/productbreadcrumberrors.php');
 require_once('interfaces/productinfoerrors.php');
+require_once('classes/functions.php');
 require_once('classes/productbreadcrumb.php');
 require_once('classes/productinfo.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
+use WoocommerceExtra\Classes\Functions;
 use WoocommerceExtra\Classes\ProductBreadcrumb;
 use WoocommerceExtra\Classes\ProductInfo;
 
@@ -107,6 +110,8 @@ function we_get_order_id(){
     }
 }
 
+
+
 //Get order info from current order id
 function we_get_order_info($order_id){
     global $wc_order,$logFile;
@@ -121,26 +126,7 @@ function we_set_array_data(){
     if($wc_order != null){
         //WC_Order object instantiated
         global $data,$logFile;
-        $data['currency'] = $wc_order->get_currency();
-        $products = $wc_order->get_items();
-        $data['items'] = array();
-        foreach($products as $product){
-            $wc_product = new WC_Product($product['product_id']);
-            //$data['items'][$i]['categories'] = strip_tags($wc_product->get_categories());
-            $data['items'][] = array(
-            	'id' => $product['product_id'],
-                'name' => $wc_product->get_name(),
-                'price' => floatval($wc_product->get_price()),
-                'quantity' => $product['quantity'],
-                'total' => floatval($product['total'])
-            );
-        }
-        $data['shipping'] = $wc_order->get_total_shipping();
-        //$data['tax_totals'] = $wc_order->get_tax_totals();
-        $data['tax'] = floatval($wc_order->get_total_tax());
-        $data['value'] = floatval($wc_order->get_total());
-        $data['transaction_id'] = $wc_order->get_transaction_id();
-        file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        $data = Functions::purchase_data($wc_order);
     }//if($wc_order != null){
 }
 
