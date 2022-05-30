@@ -27,7 +27,7 @@ $pluginDir = plugin_dir_path(__FILE__);
 $logFile = $pluginDir.C::FILE_LOG;
 $current_order_id = 0;
 $wc_order = null; //Woocommerce order instance
-$data = array(); //Data needed from current order
+$purchase_data = array(); //Purchase Data to send at Google Analytics
 
 register_activation_hook(__FILE__,'we_activation');
 function we_activation(){
@@ -69,6 +69,7 @@ function we_cart_product_removed($product_id,$cart){
     $currency = get_woocommerce_currency();
     file_put_contents($logFile,"Product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
     file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
+
     //file_put_contents($logFile,"Cart => ".var_export($cart,true)."\r\n",FILE_APPEND);
 
 }
@@ -117,38 +118,21 @@ function we_get_order_id(){
         $current_order_id = intval(str_replace(C::REQ_ORDER_RECEIVED,'',$wp->request));
         //file_put_contents($logFile,"Wp request => ".var_export($wp->request,true)."\r\n",FILE_APPEND);
         //file_put_contents($logFile,"Current order id => ".var_export($current_order_id,true)."\r\n",FILE_APPEND);
-        we_get_order_info($current_order_id);
+        $wc_order = new WC_Order($current_order_id);
+        if($wc_order != null){
+            //WC_Order object instantiated
+            global $purchase_data;
+            $purchase_data = Functions::purchase_data($wc_order);
+            we_send_order_data($purchase_data);
+        }//if($wc_order != null){
+        //file_put_contents($logFile,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
     }
-}
-
-
-
-//Get order info from current order id
-function we_get_order_info($order_id){
-    global $wc_order,$logFile;
-    $wc_order = new WC_Order($order_id);
-    //file_put_contents($logFile,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
-    we_set_array_data();
-}
-
-//Assign the needed order data to $data array
-function we_set_array_data(){
-    global $wc_order;
-    if($wc_order != null){
-        //WC_Order object instantiated
-        global $data,$logFile;
-        $data = Functions::purchase_data($wc_order);
-    }//if($wc_order != null){
 }
 
 //Send order data to Google Analytics
 add_action('wp_footer','we_send_order_data');
-function we_send_order_data(){
-    global $data,$logFile;
-    $count = count($data);
-    if($count > 0){
-        //Array is not empty
-        //file_put_contents($logFile,"SERVER => ".var_export($_SERVER,true)."\r\n",FILE_APPEND);
+function we_send_order_data($data){
+    global $purchase_data,$logFile;
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
@@ -169,7 +153,6 @@ function we_send_order_data(){
     }// if(gTagEl){
 </script>
 <?php
-    }//if($count > 0){
 }
 
 ?>
