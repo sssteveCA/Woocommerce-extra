@@ -69,7 +69,7 @@ function we_cart_product_removed($product_key,$cart){
     $currency = get_woocommerce_currency();
     file_put_contents($logFile,"Product key => ".var_export($product_key,true)."\r\n",FILE_APPEND);
     file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
-    $product_removed_data = Functions::removed_products_data($cart,$currency,$product_key);
+    $product_removed_data = Functions::removed_products_data($cart,$currency,$product_key,['logFile' => $logFile]);
     file_put_contents($logFile,"Removed Data => ".var_export($product_removed_data,true)."\r\n",FILE_APPEND);
 }
 
@@ -121,26 +121,28 @@ function we_get_order_id(){
         if($wc_order != null){
             //WC_Order object instantiated
             global $purchase_data;
-            $purchase_data = Functions::purchase_data($wc_order);
+            $purchase_data = Functions::purchase_data($wc_order,['logFile' => $logFile]);
         }//if($wc_order != null){
         //file_put_contents($logFile,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
     }
 }
 
 //Send order data to Google Analytics
-add_action('wp_footer','we_send_order_data');
+add_action('wp_footer','we_send_data_to_ga');
 function we_send_data_to_ga(){
     global $logFile,$purchase_data,$product_removed_data;
     $data = array();
     $send_to_ga = false; //If it's true send data array to Google Analytics
     if(count($purchase_data) > 0){
         //Purchase data array is not void
+        file_put_contents($logFile,"Purchase data count\r\n",FILE_APPEND);
         $data = $purchase_data;
         $event = C::GA_EVENT_PURCHASE;
         $send_to_ga = true;
     }
     else if(count($product_removed_data) > 0){
         //Remove from cart array is not void
+        file_put_contents($logFile,"Removed cart products data count\r\n",FILE_APPEND);
         $data = $product_removed_data;
         $event = C::GA_EVENT_REMOVE_FROM_CART;
         $send_to_ga = true;
