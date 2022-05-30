@@ -14,8 +14,8 @@ interface Constants{
 
     //Directories
 
+    const DIR_JS = "/js";
     const DIR_JSON = "/json";
-
     const DIR_PLUGIN = "/woocommerce-extra";
 
 
@@ -40,6 +40,7 @@ interface Constants{
 
     //Files
 
+    const FILE_JS_REMOVEFROMCART = '/remove_from_cart.php';
     const FILE_LOG = "log.txt";
 
 
@@ -48,14 +49,13 @@ interface Constants{
     const GA_EVENT_PURCHASE = 'purchase';
     const GA_EVENT_REMOVE_FROM_CART = 'remove_from_cart';
 
-
+    //Handles
+    const H_JS_REMOVEFROMCART = 'removefromcart_js';
 
     //Pages
 
     const PAGES_HOME = 'https://postoinformatico.altervista.org/';
-
     const PAGES_CART = 'carrello';
-
     const PAGES_SHOP = Constants::PAGES_HOME.'/prodotti/';
 
 
@@ -69,7 +69,6 @@ interface Constants{
     //Selectors
 
     const SEL_PAYPAL_3RATES_BUTTON = '#buttons-container > div';
-
     const SEL_PAYPAL_BUTTON = '#buttons-container > div';
 
 }

@@ -24,6 +24,7 @@ use WoocommerceExtra\Classes\ProductBreadcrumb;
 use WoocommerceExtra\Classes\ProductInfo;
 
 $pluginDir = plugin_dir_path(__FILE__);
+$pluginUrl = plugin_dir_url(__FILE__);
 $logFile = $pluginDir.C::FILE_LOG;
 $current_order_id = 0;
 $purchase_data = array(); //Purchase Data to send at Google Analytics
@@ -130,6 +131,15 @@ function we_edit_description_tab(){
     echo $html;
 }
 
+add_action('wp_enqueue_scripts','we_scripts');
+function we_scripts(){
+    global $pluginUrl;
+    if(is_cart()){
+        //If user is in cart page
+        wp_enqueue_script(C::H_JS_REMOVEFROMCART,$pluginUrl.C::DIR_JS.C::FILE_JS_REMOVEFROMCART,array(),null,true);
+    }//if(is_cart()){
+}
+
 //Get order id from URL
 add_action('wp_head','we_get_order_id');
 function we_get_order_id(){
@@ -153,10 +163,7 @@ function we_get_order_id(){
 //Send order data to Google Analytics
 add_action('wp_footer','we_send_data_to_ga');
 function we_send_data_to_ga(){
-    global $logFile,$purchase_data,$product_removed_data;
-    file_put_contents($logFile,"we_send_data_to_ga\r\n",FILE_APPEND);
-    file_put_contents($logFile,"purchase data =>".var_export($purchase_data,true)." \r\n",FILE_APPEND);
-    file_put_contents($logFile,"products removed data =>".var_export($product_removed_data,true)."\r\n",FILE_APPEND);
+    global $logFile,$purchase_data;
     $data = array();
     $send_to_ga = false; //If it's true send data array to Google Analytics
     if(count($purchase_data) > 0){
@@ -188,13 +195,6 @@ function we_send_data_to_ga(){
 </script>
 <?php
     }//if($send_to_ga){
-}
-
-add_action('wp_footer','we_check_remove_products');
-function we_check_remove_products(){
-    if(is_cart()){
-        //If user is in cart page
-    }//if(is_cart()){
 }
 
 ?>
