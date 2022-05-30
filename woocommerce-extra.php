@@ -26,8 +26,8 @@ use WoocommerceExtra\Classes\ProductInfo;
 $pluginDir = plugin_dir_path(__FILE__);
 $logFile = $pluginDir.C::FILE_LOG;
 $current_order_id = 0;
-$wc_order = null; //Woocommerce order instance
 $purchase_data = array(); //Purchase Data to send at Google Analytics
+$product_removed_data = array(); //Products removed data to send at Google Analytics
 
 register_activation_hook(__FILE__,'we_activation');
 function we_activation(){
@@ -65,33 +65,12 @@ function we_product_categories_breadcrumb(){
 //Check when a product is removed from cart
 add_action('woocommerce_cart_item_removed','we_cart_product_removed',10,2);
 function we_cart_product_removed($product_key,$cart){
-    global $logFile;
+    global $logFile,$product_removed_data;
     $currency = get_woocommerce_currency();
     file_put_contents($logFile,"Product key => ".var_export($product_key,true)."\r\n",FILE_APPEND);
     file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
-    $data = Functions::removed_products_data($cart,$currency,$product_key);
-?>
-<script>
-    var data = <?php echo json_encode($data); ?>;
-    console.log(data);
-    /* var jsonData = JSON.stringify(data);
-    console.log(jsonData); */
-    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
-    //console.log(gTagEl);
-    if(gTagEl){
-        gTagEl[0].addEventListener('load',()=>{
-                //console.log("gTagEl loaded");
-        });
-        gTagEl[0].addEventListener('error',()=>{
-            //console.warn("gTagEl error");
-        });
-        //Send object to Google Analytics
-        gtag('event','<?php echo C::GA_EVENT_REMOVE_FROM_CART; ?>',data);
-    }// if(gTagEl){
-</script>
-<?php
-    //file_put_contents($logFile,"Cart => ".var_export($cart,true)."\r\n",FILE_APPEND);
-
+    $product_removed_data = Functions::removed_products_data($cart,$currency,$product_key);
+    file_put_contents($logFile,"Removed Data => ".var_export($product_removed_data,true)."\r\n",FILE_APPEND);
 }
 
 //Edit product description tab content
@@ -143,7 +122,6 @@ function we_get_order_id(){
             //WC_Order object instantiated
             global $purchase_data;
             $purchase_data = Functions::purchase_data($wc_order);
-            we_send_order_data($purchase_data);
         }//if($wc_order != null){
         //file_put_contents($logFile,"WC_Order => ".var_export($wc_order,true)."\r\n",FILE_APPEND);
     }
@@ -151,8 +129,23 @@ function we_get_order_id(){
 
 //Send order data to Google Analytics
 add_action('wp_footer','we_send_order_data');
-function we_send_order_data($data){
-    global $logFile;
+function we_send_data_to_ga(){
+    global $logFile,$purchase_data,$product_removed_data;
+    $data = array();
+    $send_to_ga = false; //If it's true send data array to Google Analytics
+    if(count($purchase_data) > 0){
+        //Purchase data array is not void
+        $data = $purchase_data;
+        $event = C::GA_EVENT_PURCHASE;
+        $send_to_ga = true;
+    }
+    else if(count($product_removed_data) > 0){
+        //Remove from cart array is not void
+        $data = $product_removed_data;
+        $event = C::GA_EVENT_REMOVE_FROM_CART;
+        $send_to_ga = true;
+    }
+    if($send_to_ga){
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
@@ -169,10 +162,11 @@ function we_send_order_data($data){
             //console.warn("gTagEl error");
         });
         //Send object to Google Analytics
-        gtag('event','<?php echo C::GA_EVENT_PURCHASE; ?>',data);
+        gtag('event','<?php echo $event; ?>',data);
     }// if(gTagEl){
 </script>
 <?php
+    }//if($send_to_ga){
 }
 
 ?>
