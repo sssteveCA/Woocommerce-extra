@@ -53,8 +53,8 @@ class Functions implements C{
                     'item_id' => $product->get_id(),
                     'item_name' => $product->get_name(),
                     'category' => $product->get_categories(),
-                    'price' => $product->get_price(),
-                    'quantity' => $v['quantity']
+                    'price' => floatval($product->get_price()),
+                    'quantity' => intval($v['quantity'])
                 );
             }//if($k == $product_key){
         }//foreach($removed as $k => $v){

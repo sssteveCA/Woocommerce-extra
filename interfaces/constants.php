@@ -45,12 +45,8 @@ interface Constants{
 
 
     //Google Analytics events
-
-    const GA_EVENT_PAYPAL_3RATES_BUTTON = 'paypal_3_rates_button';
-
-    const GA_EVENT_PAYPAL_BUTTON = 'paypal_button';
-
-    const GA_EVENT_WC_PURCHASE = 'purchase';
+    const GA_EVENT_PURCHASE = 'purchase';
+    const GA_EVENT_REMOVE_FROM_CART = 'remove_from_cart';
 
 
 

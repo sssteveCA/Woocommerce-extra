@@ -64,12 +64,32 @@ function we_product_categories_breadcrumb(){
 
 //Check when a product is removed from cart
 add_action('woocommerce_cart_item_removed','we_cart_product_removed',10,2);
-function we_cart_product_removed($product_id,$cart){
+function we_cart_product_removed($product_key,$cart){
     global $logFile;
     $currency = get_woocommerce_currency();
-    file_put_contents($logFile,"Product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"Product key => ".var_export($product_key,true)."\r\n",FILE_APPEND);
     file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
-
+    $data = Functions::removed_products_data($cart,$currency,$product_key);
+?>
+<script>
+    var data = <?php echo json_encode($data); ?>;
+    console.log(data);
+    /* var jsonData = JSON.stringify(data);
+    console.log(jsonData); */
+    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
+    //console.log(gTagEl);
+    if(gTagEl){
+        gTagEl[0].addEventListener('load',()=>{
+                //console.log("gTagEl loaded");
+        });
+        gTagEl[0].addEventListener('error',()=>{
+            //console.warn("gTagEl error");
+        });
+        //Send object to Google Analytics
+        gtag('event','<?php echo C::GA_EVENT_REMOVE_FROM_CART; ?>',data);
+    }// if(gTagEl){
+</script>
+<?php
     //file_put_contents($logFile,"Cart => ".var_export($cart,true)."\r\n",FILE_APPEND);
 
 }
@@ -132,7 +152,7 @@ function we_get_order_id(){
 //Send order data to Google Analytics
 add_action('wp_footer','we_send_order_data');
 function we_send_order_data($data){
-    global $purchase_data,$logFile;
+    global $logFile;
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;
@@ -149,7 +169,7 @@ function we_send_order_data($data){
             //console.warn("gTagEl error");
         });
         //Send object to Google Analytics
-        gtag('event','<?php echo C::GA_EVENT_WC_PURCHASE; ?>',data);
+        gtag('event','<?php echo C::GA_EVENT_PURCHASE; ?>',data);
     }// if(gTagEl){
 </script>
 <?php
