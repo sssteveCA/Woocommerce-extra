@@ -33,7 +33,7 @@ class Functions implements C{
         $data['tax'] = floatval($order->get_total_tax());
         $data['value'] = floatval($order->get_total());
         $data['transaction_id'] = $order->get_transaction_id();
-        file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
         return $data;
     }
 

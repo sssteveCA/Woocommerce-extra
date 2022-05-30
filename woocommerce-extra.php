@@ -65,12 +65,32 @@ function we_product_categories_breadcrumb(){
 //Check when a product is removed from cart
 add_action('woocommerce_cart_item_removed','we_cart_product_removed',10,2);
 function we_cart_product_removed($product_key,$cart){
-    global $logFile,$product_removed_data;
+    global $logFile;
     $currency = get_woocommerce_currency();
     file_put_contents($logFile,"Product key => ".var_export($product_key,true)."\r\n",FILE_APPEND);
     file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
-    $product_removed_data = Functions::removed_products_data($cart,$currency,$product_key,['logFile' => $logFile]);
-    file_put_contents($logFile,"Removed Data => ".var_export($product_removed_data,true)."\r\n",FILE_APPEND);
+    $data = Functions::removed_products_data($cart,$currency,$product_key,['logFile' => $logFile]);
+    file_put_contents($logFile,"Removed Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+?>
+<script>
+    var data = <?php echo json_encode($data); ?>;
+    console.log(data);
+    /* var jsonData = JSON.stringify(data);
+    console.log(jsonData); */
+    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
+    //console.log(gTagEl);
+    if(gTagEl){
+        gTagEl[0].addEventListener('load',()=>{
+                //console.log("gTagEl loaded");
+        });
+        gTagEl[0].addEventListener('error',()=>{
+            //console.warn("gTagEl error");
+        });
+        //Send object to Google Analytics
+        gtag('event','<?php echo C::GA_EVENT_REMOVE_FROM_CART; ?>',data);
+    }// if(gTagEl){
+</script>
+<?php
 }
 
 //Edit product description tab content
@@ -131,6 +151,9 @@ function we_get_order_id(){
 add_action('wp_footer','we_send_data_to_ga');
 function we_send_data_to_ga(){
     global $logFile,$purchase_data,$product_removed_data;
+    file_put_contents($logFile,"we_send_data_to_ga\r\n",FILE_APPEND);
+    file_put_contents($logFile,"purchase data =>".var_export($purchase_data,true)." \r\n",FILE_APPEND);
+    file_put_contents($logFile,"products removed data =>".var_export($product_removed_data,true)."\r\n",FILE_APPEND);
     $data = array();
     $send_to_ga = false; //If it's true send data array to Google Analytics
     if(count($purchase_data) > 0){
@@ -138,13 +161,6 @@ function we_send_data_to_ga(){
         file_put_contents($logFile,"Purchase data count\r\n",FILE_APPEND);
         $data = $purchase_data;
         $event = C::GA_EVENT_PURCHASE;
-        $send_to_ga = true;
-    }
-    else if(count($product_removed_data) > 0){
-        //Remove from cart array is not void
-        file_put_contents($logFile,"Removed cart products data count\r\n",FILE_APPEND);
-        $data = $product_removed_data;
-        $event = C::GA_EVENT_REMOVE_FROM_CART;
         $send_to_ga = true;
     }
     if($send_to_ga){
