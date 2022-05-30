@@ -1,0 +1,676 @@
+Cart removed => array (
+  'e96ed478dab8595a7dbda4cbcbee168f' => 
+  array (
+    'key' => 'e96ed478dab8595a7dbda4cbcbee168f',
+    'product_id' => 218,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 219.78,
+      ),
+      'total' => 
+      array (
+        1 => 219.78,
+      ),
+    ),
+    'line_subtotal' => 999.0,
+    'line_subtotal_tax' => 219.78,
+    'line_total' => 999.0,
+    'line_tax' => 219.78,
+  ),
+  '060ad92489947d410d897474079c1477' => 
+  array (
+    'key' => '060ad92489947d410d897474079c1477',
+    'product_id' => 221,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 43.9956,
+      ),
+      'total' => 
+      array (
+        1 => 43.9956,
+      ),
+    ),
+    'line_subtotal' => 199.98,
+    'line_subtotal_tax' => 43.9956,
+    'line_total' => 199.98,
+    'line_tax' => 43.9956,
+  ),
+  'f7e6c85504ce6e82442c770f7c8606f0' => 
+  array (
+    'key' => 'f7e6c85504ce6e82442c770f7c8606f0',
+    'product_id' => 173,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 153.78,
+      ),
+      'total' => 
+      array (
+        1 => 153.78,
+      ),
+    ),
+    'line_subtotal' => 699.0,
+    'line_subtotal_tax' => 153.78,
+    'line_total' => 699.0,
+    'line_tax' => 153.78,
+  ),
+  '274ad4786c3abca69fa097b85867d9a4' => 
+  array (
+    'key' => '274ad4786c3abca69fa097b85867d9a4',
+    'product_id' => 204,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 29.477800000000002,
+      ),
+      'total' => 
+      array (
+        1 => 29.477800000000002,
+      ),
+    ),
+    'line_subtotal' => 133.99,
+    'line_subtotal_tax' => 29.477800000000002,
+    'line_total' => 133.99,
+    'line_tax' => 29.477800000000002,
+  ),
+  '7eabe3a1649ffa2b3ff8c02ebfd5659f' => 
+  array (
+    'key' => '7eabe3a1649ffa2b3ff8c02ebfd5659f',
+    'product_id' => 206,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 204.3822,
+      ),
+      'total' => 
+      array (
+        1 => 204.3822,
+      ),
+    ),
+    'line_subtotal' => 929.01,
+    'line_subtotal_tax' => 204.3822,
+    'line_total' => 929.01,
+    'line_tax' => 204.3822,
+  ),
+  'ca46c1b9512a7a8315fa3c5a946e8265' => 
+  array (
+    'key' => 'ca46c1b9512a7a8315fa3c5a946e8265',
+    'product_id' => 214,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 170.5,
+      ),
+      'total' => 
+      array (
+        1 => 170.5,
+      ),
+    ),
+    'line_subtotal' => 775.0,
+    'line_subtotal_tax' => 170.5,
+    'line_total' => 775.0,
+    'line_tax' => 170.5,
+  ),
+  '8f85517967795eeef66c225f7883bdcb' => 
+  array (
+    'key' => '8f85517967795eeef66c225f7883bdcb',
+    'product_id' => 178,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 173.58,
+      ),
+      'total' => 
+      array (
+        1 => 173.58,
+      ),
+    ),
+    'line_subtotal' => 789.0,
+    'line_subtotal_tax' => 173.58,
+    'line_total' => 789.0,
+    'line_tax' => 173.58,
+  ),
+  '38af86134b65d0f10fe33d30dd76442e' => 
+  array (
+    'key' => '38af86134b65d0f10fe33d30dd76442e',
+    'product_id' => 176,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 438.9,
+      ),
+      'total' => 
+      array (
+        1 => 438.9,
+      ),
+    ),
+    'line_subtotal' => 1995.0,
+    'line_subtotal_tax' => 438.9,
+    'line_total' => 1995.0,
+    'line_tax' => 438.9,
+  ),
+)
+removed products data => array (
+  'currency' => 'EUR',
+  'value' => 699.0,
+  'tax' => 153.78,
+  'items' => 
+  array (
+    0 => 
+    array (
+      'item_id' => 173,
+      'item_name' => 'HP 15s-fq4017nl Notebook',
+      'category' => '<a href="https://postoinformatico.altervista.org/categoria-prodotto/computer/" rel="tag">Computer</a>, <a href="https://postoinformatico.altervista.org/categoria-prodotto/computer/windows-computer/" rel="tag">Windows</a>',
+      'price' => 699.0,
+      'quantity' => 1,
+    ),
+  ),
+)
+Cart removed => array (
+  'e96ed478dab8595a7dbda4cbcbee168f' => 
+  array (
+    'key' => 'e96ed478dab8595a7dbda4cbcbee168f',
+    'product_id' => 218,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 219.78,
+      ),
+      'total' => 
+      array (
+        1 => 219.78,
+      ),
+    ),
+    'line_subtotal' => 999.0,
+    'line_subtotal_tax' => 219.78,
+    'line_total' => 999.0,
+    'line_tax' => 219.78,
+  ),
+  '060ad92489947d410d897474079c1477' => 
+  array (
+    'key' => '060ad92489947d410d897474079c1477',
+    'product_id' => 221,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 43.9956,
+      ),
+      'total' => 
+      array (
+        1 => 43.9956,
+      ),
+    ),
+    'line_subtotal' => 199.98,
+    'line_subtotal_tax' => 43.9956,
+    'line_total' => 199.98,
+    'line_tax' => 43.9956,
+  ),
+  'f7e6c85504ce6e82442c770f7c8606f0' => 
+  array (
+    'key' => 'f7e6c85504ce6e82442c770f7c8606f0',
+    'product_id' => 173,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 153.78,
+      ),
+      'total' => 
+      array (
+        1 => 153.78,
+      ),
+    ),
+    'line_subtotal' => 699.0,
+    'line_subtotal_tax' => 153.78,
+    'line_total' => 699.0,
+    'line_tax' => 153.78,
+  ),
+  '274ad4786c3abca69fa097b85867d9a4' => 
+  array (
+    'key' => '274ad4786c3abca69fa097b85867d9a4',
+    'product_id' => 204,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 29.477800000000002,
+      ),
+      'total' => 
+      array (
+        1 => 29.477800000000002,
+      ),
+    ),
+    'line_subtotal' => 133.99,
+    'line_subtotal_tax' => 29.477800000000002,
+    'line_total' => 133.99,
+    'line_tax' => 29.477800000000002,
+  ),
+  '7eabe3a1649ffa2b3ff8c02ebfd5659f' => 
+  array (
+    'key' => '7eabe3a1649ffa2b3ff8c02ebfd5659f',
+    'product_id' => 206,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 204.3822,
+      ),
+      'total' => 
+      array (
+        1 => 204.3822,
+      ),
+    ),
+    'line_subtotal' => 929.01,
+    'line_subtotal_tax' => 204.3822,
+    'line_total' => 929.01,
+    'line_tax' => 204.3822,
+  ),
+  'ca46c1b9512a7a8315fa3c5a946e8265' => 
+  array (
+    'key' => 'ca46c1b9512a7a8315fa3c5a946e8265',
+    'product_id' => 214,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 170.5,
+      ),
+      'total' => 
+      array (
+        1 => 170.5,
+      ),
+    ),
+    'line_subtotal' => 775.0,
+    'line_subtotal_tax' => 170.5,
+    'line_total' => 775.0,
+    'line_tax' => 170.5,
+  ),
+  '8f85517967795eeef66c225f7883bdcb' => 
+  array (
+    'key' => '8f85517967795eeef66c225f7883bdcb',
+    'product_id' => 178,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 173.58,
+      ),
+      'total' => 
+      array (
+        1 => 173.58,
+      ),
+    ),
+    'line_subtotal' => 789.0,
+    'line_subtotal_tax' => 173.58,
+    'line_total' => 789.0,
+    'line_tax' => 173.58,
+  ),
+  '38af86134b65d0f10fe33d30dd76442e' => 
+  array (
+    'key' => '38af86134b65d0f10fe33d30dd76442e',
+    'product_id' => 176,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 438.9,
+      ),
+      'total' => 
+      array (
+        1 => 438.9,
+      ),
+    ),
+    'line_subtotal' => 1995.0,
+    'line_subtotal_tax' => 438.9,
+    'line_total' => 1995.0,
+    'line_tax' => 438.9,
+  ),
+)
+removed products data => array (
+  'currency' => 'EUR',
+  'value' => 699.0,
+  'tax' => 153.78,
+  'items' => 
+  array (
+    0 => 
+    array (
+      'item_id' => 173,
+      'item_name' => 'HP 15s-fq4017nl Notebook',
+      'price' => 699.0,
+      'quantity' => 1,
+    ),
+  ),
+)
+Cart removed => array (
+  'e96ed478dab8595a7dbda4cbcbee168f' => 
+  array (
+    'key' => 'e96ed478dab8595a7dbda4cbcbee168f',
+    'product_id' => 218,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 219.78,
+      ),
+      'total' => 
+      array (
+        1 => 219.78,
+      ),
+    ),
+    'line_subtotal' => 999.0,
+    'line_subtotal_tax' => 219.78,
+    'line_total' => 999.0,
+    'line_tax' => 219.78,
+  ),
+  '060ad92489947d410d897474079c1477' => 
+  array (
+    'key' => '060ad92489947d410d897474079c1477',
+    'product_id' => 221,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 43.9956,
+      ),
+      'total' => 
+      array (
+        1 => 43.9956,
+      ),
+    ),
+    'line_subtotal' => 199.98,
+    'line_subtotal_tax' => 43.9956,
+    'line_total' => 199.98,
+    'line_tax' => 43.9956,
+  ),
+  'f7e6c85504ce6e82442c770f7c8606f0' => 
+  array (
+    'key' => 'f7e6c85504ce6e82442c770f7c8606f0',
+    'product_id' => 173,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 153.78,
+      ),
+      'total' => 
+      array (
+        1 => 153.78,
+      ),
+    ),
+    'line_subtotal' => 699.0,
+    'line_subtotal_tax' => 153.78,
+    'line_total' => 699.0,
+    'line_tax' => 153.78,
+  ),
+  '274ad4786c3abca69fa097b85867d9a4' => 
+  array (
+    'key' => '274ad4786c3abca69fa097b85867d9a4',
+    'product_id' => 204,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 29.477800000000002,
+      ),
+      'total' => 
+      array (
+        1 => 29.477800000000002,
+      ),
+    ),
+    'line_subtotal' => 133.99,
+    'line_subtotal_tax' => 29.477800000000002,
+    'line_total' => 133.99,
+    'line_tax' => 29.477800000000002,
+  ),
+  '7eabe3a1649ffa2b3ff8c02ebfd5659f' => 
+  array (
+    'key' => '7eabe3a1649ffa2b3ff8c02ebfd5659f',
+    'product_id' => 206,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 204.3822,
+      ),
+      'total' => 
+      array (
+        1 => 204.3822,
+      ),
+    ),
+    'line_subtotal' => 929.01,
+    'line_subtotal_tax' => 204.3822,
+    'line_total' => 929.01,
+    'line_tax' => 204.3822,
+  ),
+  'ca46c1b9512a7a8315fa3c5a946e8265' => 
+  array (
+    'key' => 'ca46c1b9512a7a8315fa3c5a946e8265',
+    'product_id' => 214,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 170.5,
+      ),
+      'total' => 
+      array (
+        1 => 170.5,
+      ),
+    ),
+    'line_subtotal' => 775.0,
+    'line_subtotal_tax' => 170.5,
+    'line_total' => 775.0,
+    'line_tax' => 170.5,
+  ),
+  '8f85517967795eeef66c225f7883bdcb' => 
+  array (
+    'key' => '8f85517967795eeef66c225f7883bdcb',
+    'product_id' => 178,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 173.58,
+      ),
+      'total' => 
+      array (
+        1 => 173.58,
+      ),
+    ),
+    'line_subtotal' => 789.0,
+    'line_subtotal_tax' => 173.58,
+    'line_total' => 789.0,
+    'line_tax' => 173.58,
+  ),
+  '38af86134b65d0f10fe33d30dd76442e' => 
+  array (
+    'key' => '38af86134b65d0f10fe33d30dd76442e',
+    'product_id' => 176,
+    'variation_id' => 0,
+    'variation' => 
+    array (
+    ),
+    'quantity' => 1,
+    'data_hash' => 'b5c1d5ca8bae6d4896cf1807cdf763f0',
+    'line_tax_data' => 
+    array (
+      'subtotal' => 
+      array (
+        1 => 438.9,
+      ),
+      'total' => 
+      array (
+        1 => 438.9,
+      ),
+    ),
+    'line_subtotal' => 1995.0,
+    'line_subtotal_tax' => 438.9,
+    'line_total' => 1995.0,
+    'line_tax' => 438.9,
+  ),
+)
+removed products data => array (
+  'currency' => 'EUR',
+  'value' => 133.99,
+  'tax' => 29.477800000000002,
+  'items' => 
+  array (
+    0 => 
+    array (
+      'item_id' => 204,
+      'item_name' => 'SAMSUNG Galaxy A03 Blue',
+      'price' => 133.99,
+      'quantity' => 1,
+    ),
+  ),
+)
