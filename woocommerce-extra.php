@@ -62,6 +62,17 @@ function we_product_categories_breadcrumb(){
     
 }
 
+//Check when a product is removed from cart
+add_action('woocommerce_cart_item_removed','we_cart_product_removed',10,2);
+function we_cart_product_removed($product_id,$cart){
+    global $logFile;
+    $currency = get_woocommerce_currency();
+    file_put_contents($logFile,"Product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
+    //file_put_contents($logFile,"Cart => ".var_export($cart,true)."\r\n",FILE_APPEND);
+
+}
+
 //Edit product description tab content
 add_filter('woocommerce_product_tabs','we_edit_tabs',98);
 function we_edit_tabs($tabs){
@@ -137,7 +148,7 @@ function we_send_order_data(){
     $count = count($data);
     if($count > 0){
         //Array is not empty
-        file_put_contents($logFile,"SERVER => ".var_export($_SERVER,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"SERVER => ".var_export($_SERVER,true)."\r\n",FILE_APPEND);
 ?>
 <script>
     var data = <?php echo json_encode($data); ?>;

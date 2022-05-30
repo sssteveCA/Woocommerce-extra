@@ -6,13 +6,15 @@ use WoocommerceExtra\Interfaces\Constants as C;
 
 use WC_Order;
 use WC_Product;
+use WC_Cart;
 
 class Functions implements C{
 
-    public static function purchase_data(WC_Order $wc_order): array{
+    //Data to send in purchase event
+    public static function purchase_data(WC_Order $order): array{
         $data = array();
-        $data['currency'] = $wc_order->get_currency();
-        $products = $wc_order->get_items();
+        $data['currency'] = $order->get_currency();
+        $products = $order->get_items();
         $data['items'] = array();
         foreach($products as $product){
             $wc_product = new WC_Product($product['product_id']);
@@ -25,13 +27,39 @@ class Functions implements C{
                 'total' => floatval($product['total'])
             );
         }//foreach($products as $product){
-        $data['shipping'] = $wc_order->get_total_shipping();
-        //$data['tax_totals'] = $wc_order->get_tax_totals();
-        $data['tax'] = floatval($wc_order->get_total_tax());
-        $data['value'] = floatval($wc_order->get_total());
-        $data['transaction_id'] = $wc_order->get_transaction_id();
+        $data['shipping'] = $order->get_total_shipping();
+        //$data['tax_totals'] = $order->get_tax_totals();
+        $data['tax'] = floatval($order->get_total_tax());
+        $data['value'] = floatval($order->get_total());
+        $data['transaction_id'] = $order->get_transaction_id();
         file_put_contents(C::FILE_LOG,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
         return $data;
+    }
+
+    //Data to send in removed cart event($product_key = removed product key)
+    public static function removed_products_data(WC_Cart $cart,$currency,$product_key): array{
+        $data = [];
+        $data['currency'] = $currency;
+        $removed = $cart->get_removed_cart_contents();
+        //file_put_contents(C::FILE_LOG,"Cart removed => ".var_export($removed,true)."\r\n",FILE_APPEND);
+        $data['value'] = floatval($removed['line_total']);
+        $data['tax'] = floatval($removed['line_tax']);
+        $data['items'] = [];
+        foreach($removed as $k => $v){
+            //Check product key
+            if($k == $product_key){
+                $product = new WC_Product($v['id']);
+                $data['items'][] = array(
+                    'item_id' => $product->get_id(),
+                    'item_name' => $product->get_name(),
+                    'category' => $product->get_categories(),
+                    'price' => $product->get_price(),
+                    'quantity' => $v['quantity']
+                );
+            }//if($k == $product_key){
+        }//foreach($removed as $k => $v){
+        file_put_contents(C::FILE_LOG,"removed products data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        return $data;     
     }
 }
 ?>
