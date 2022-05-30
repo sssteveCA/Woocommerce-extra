@@ -161,32 +161,4 @@ function we_send_order_data(){
     }//if($count > 0){
 }
 
-//Send data to Google Analytics if a Paypal button is clicked
-add_action('wp_footer','we_send_paypal_button_click');
-function we_send_paypal_button_click(){
-    global $logFile,$wp;
-    //file_put_contents($logFile,"Wp => ".var_export($wp,true)."\r\n",FILE_APPEND);
-    if($wp->request == C::PAGES_CART){
-        //User is in the cart page
-?>
-<script>
-    var gTagEl = document.querySelectorAll('<?php echo C::ELEMENT_ID_GTAG; ?>');
-    //console.log(gTagEl);
-    if(gTagEl){
-        gTagEl[0].addEventListener('load',()=>{
-                //console.log("gTagEl loaded");
-        });
-        gTagEl[0].addEventListener('error',()=>{
-            //console.warn("gTagEl error");
-        });
-        window.addEventListener('load', ()=>{
-            var button_container = document.getElementById('buttons-container');
-            console.log(button_container);
-        });//window.addEventListener('load', ()=>{   
-    }// if(gTagEl){
-</script>
-<?php
-        
-    }//if($wp->request == C::PAGES_CART){
-}
 ?>
