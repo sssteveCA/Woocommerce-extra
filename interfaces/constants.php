@@ -17,6 +17,7 @@ interface Constants{
     const DIR_JS = "/js";
     const DIR_JSON = "/json";
     const DIR_PLUGIN = "/woocommerce-extra";
+    const DIR_SCRIPT = "/script";
 
 
 
@@ -42,6 +43,7 @@ interface Constants{
 
     const FILE_JS_REMOVEFROMCART = '/remove_from_cart.php';
     const FILE_LOG = "log.txt";
+    CONST FILE_SCRIPT_REMOVEFROMCART = '/remove_from_cart_data.php';
 
 
 

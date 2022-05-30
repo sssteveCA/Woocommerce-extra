@@ -17,9 +17,15 @@ jQuery(document).ready(()=>{
     removes.on('click', (e)=>{
         //User remove a product from cart
         console.log("Remove product click");
-        console.log(e);
-        let product_id = e.target.dataset['product_id'];
-        console.log(product_id);
+        //console.log(e);
+        const link = e.target.href;
+        //console.log(link);
+        const query = "?remove_item=";
+        const keyStart = link.indexOf(query)+query.length
+        const keyEnd = link.indexOf("&",keyStart);
+        const l = keyEnd - keyStart;
+        const item_key = link.substr(keyStart,l);
+        console.log(item_key);
     });//removes.on('click', ()=>{
 });//jQuery(document).ready(()=>{
 JS;

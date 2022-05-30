@@ -41,12 +41,12 @@ class Functions implements C{
     public static function removed_products_data(WC_Cart $cart,$currency,$product_key,array $params = array()): array{
         $data = [];
         $logFile = isset($params['logFile']) ? $params['logFile'] : C::FILE_LOG;
-        $data['currency'] = $currency;
         $removed = $cart->get_removed_cart_contents();
         file_put_contents($logFile,"Cart removed => ".var_export($removed,true)."\r\n",FILE_APPEND);
         foreach($removed as $k => $v){
             //Check product key
             if($k == $product_key){
+                $data['currency'] = $currency;
                 $data['value'] = floatval($v['line_total']);
                 $data['tax'] = floatval($v['line_tax']);
                 $data['items'] = [];
@@ -54,7 +54,7 @@ class Functions implements C{
                 $data['items'][] = array(
                     'item_id' => $product->get_id(),
                     'item_name' => $product->get_name(),
-                    'category' => $product->get_categories(),
+                    //'category' => $product->get_categories(),
                     'price' => floatval($product->get_price()),
                     'quantity' => intval($v['quantity'])
                 );

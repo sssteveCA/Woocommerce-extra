@@ -72,29 +72,6 @@ function we_cart_product_removed($product_key,$cart){
     file_put_contents($logFile,"Currency => ".var_export($currency,true)."\r\n",FILE_APPEND);
     $data = Functions::removed_products_data($cart,$currency,$product_key,['logFile' => $logFile]);
     file_put_contents($logFile,"Removed Data => ".var_export($data,true)."\r\n",FILE_APPEND);
-?>
-<script>
-    window.addEventListener('DOMContentLoaded',()=>{
-        alert("Prodotto rimosso");
-    });
-/*var data = <?php echo json_encode($data); ?>;
-console.log(data);
-/* var jsonData = JSON.stringify(data);
-console.log(jsonData); 
-var gTagEl = document.querySelectorAll('<?php //echo C::ELEMENT_ID_GTAG; ?>');
-console.log(gTagEl);*/
-/*if(gTagEl){
-    gTagEl[0].addEventListener('load',()=>{
-            //console.log("gTagEl loaded");
-    });
-    gTagEl[0].addEventListener('error',()=>{
-        //console.warn("gTagEl error");
-    });
-    //Send object to Google Analytics
-    gtag('event','<?php //echo C::GA_EVENT_REMOVE_FROM_CART; ?>',data);*()
-}// if(gTagEl){
-</script>
-<?php
 }
 
 //Edit product description tab content
