@@ -17,8 +17,11 @@ class Functions implements C{
         if($product->exists()){
             $data['data'] = [
                 'currency' => $currency,
-                'value' => $product->get_price(),
-                'items' => [
+                'item_id' => (string)$product_id,
+                'item_name' => $product->get_name(),
+                'value' => $product->get_price()
+            ];
+             $data['data']['items'][0] = [
                     'item_id' => (string)$product_id,
                     'item_name' => $product->get_name(),
                     'currency' => $currency,
@@ -27,7 +30,6 @@ class Functions implements C{
                     'rating' => $product->get_rating_count(),
                     'sku' => $product->get_sku(),
                     'slug' => $product->get_slug()
-                ]
             ];
         }//if($product->exists()){
         return $data;
