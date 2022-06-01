@@ -27,6 +27,7 @@ $pluginDir = plugin_dir_path(__FILE__);
 $pluginUrl = plugin_dir_url(__FILE__);
 $logFile = $pluginDir.C::FILE_LOG;
 $current_order_id = 0;
+$addtocart_data = array(); //Add to cart data to send at Google Analytics
 $purchase_data = array(); //Purchase Data to send at Google Analytics
 $product_removed_data = array(); //Products removed data to send at Google Analytics
 
@@ -65,14 +66,21 @@ function we_product_categories_breadcrumb(){
 //Check when a product is added to the cart
 add_action('woocommerce_add_to_cart','we_cart_product_added',10,6);
 function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_id,$variation,$cart_item_data){
-    global $logFile;
-    file_put_contents($logFile,"we_cart_product_added\r\n",FILE_APPEND);
-    file_put_contents($logFile,"cart item key => ".var_export($cart_item_key,true)."\r\n",FILE_APPEND);
-    file_put_contents($logFile,"product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
-    file_put_contents($logFile,"quantity => ".var_export($quantity,true)."\r\n",FILE_APPEND);
-    file_put_contents($logFile,"variation id => ".var_export($variation_id,true)."\r\n",FILE_APPEND);
-    file_put_contents($logFile,"variation => ".var_export($variation,true)."\r\n",FILE_APPEND);
-    file_put_contents($logFile,"cart item data => ".var_export($cart_item_data,true)."\r\n",FILE_APPEND);
+    if(is_product()){
+        //Only if is single product page
+        global $addtocart_data,$logFile;
+       /*  file_put_contents($logFile,"we_cart_product_added\r\n",FILE_APPEND);
+        file_put_contents($logFile,"cart item key => ".var_export($cart_item_key,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"quantity => ".var_export($quantity,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"variation id => ".var_export($variation_id,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"variation => ".var_export($variation,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"cart item data => ".var_export($cart_item_data,true)."\r\n",FILE_APPEND); */
+        $currency = get_woocommerce_currency();
+        $addtocart_data = Functions::add_to_cart_data($product_id,$currency,['logFile' => $logFile]);
+        file_put_contents($logFile,"add to cart data => ".var_export($addtocart_data,true)."\r\n",FILE_APPEND);
+    }//if(is_product()){
+    
 }
 
 //Check when a product is removed from cart
@@ -129,7 +137,7 @@ function we_scripts(){
     }//if(is_cart()){
     if(is_product()){
         //Single product page
-        wp_enqueue_script(C::H_JS_ADDTOCART_SINGLEPRODUCT,$pluginUrl.C::DIR_JS.C::FILE_JS_ADDTOCART_SP,array(),null,true);  
+        //wp_enqueue_script(C::H_JS_ADDTOCART_SINGLEPRODUCT,$pluginUrl.C::DIR_JS.C::FILE_JS_ADDTOCART_SP,array(),null,true);  
     }//if(is_product()){
     if(is_shop()){
         //Shop page
@@ -160,7 +168,7 @@ function we_get_order_id(){
 //Send order data to Google Analytics
 add_action('wp_footer','we_send_data_to_ga');
 function we_send_data_to_ga(){
-    global $logFile,$purchase_data;
+    global $addtocart_data,$logFile,$purchase_data;
     $data = array();
     $send_to_ga = false; //If it's true send data array to Google Analytics
     if(count($purchase_data) > 0){
@@ -168,6 +176,13 @@ function we_send_data_to_ga(){
         file_put_contents($logFile,"Purchase data count\r\n",FILE_APPEND);
         $data = $purchase_data;
         $event = C::GA_EVENT_PURCHASE;
+        $send_to_ga = true;
+    }
+    if(count($addtocart_data) > 0){
+        //Add to cart data array is not void
+        file_put_contents($logFile,"Add to cart data count\r\n",FILE_APPEND);
+        $data = $addtocart_data;
+        $event = C::GA_EVENT_ADD_TO_CART;
         $send_to_ga = true;
     }
     if($send_to_ga){

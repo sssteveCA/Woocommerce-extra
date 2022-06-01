@@ -21,11 +21,12 @@ interface Constants{
     const ERR_WOOCOMMERCE_NOT_FOUND = 'Installa e attiva Woocommerce per utilizzare questo plugin';
 
     //Files
-    const FILE_JS_ADDTOCART = '/add_to_cart_data.php';
+    const FILE_JS_ADDTOCART = '/add_to_cart.php';
     const FILE_JS_ADDTOCART_SP = '/add_to_cart_singleproduct.php';
     const FILE_JS_REMOVEFROMCART = '/remove_from_cart.php';
     const FILE_LOG = "log.txt";
-    CONST FILE_SCRIPT_REMOVEFROMCART = '/remove_from_cart_data.php';
+    const FILE_SCRIPT_ADDTOCART = '/add_to_cart_data.php';
+    const FILE_SCRIPT_REMOVEFROMCART = '/remove_from_cart_data.php';
 
     //Google Analytics events
     const GA_EVENT_ADD_TO_CART = 'add_to_cart';
