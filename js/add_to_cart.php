@@ -36,6 +36,8 @@ jQuery(document).ready(()=>{
             if(data['ok'] == true){
                 gtag('event','{$event}',data['data']);
             }
+        }).catch(err =>{
+            console.warn("Error");
         });
     });
 });
