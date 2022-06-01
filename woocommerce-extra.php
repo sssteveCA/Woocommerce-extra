@@ -66,9 +66,12 @@ function we_product_categories_breadcrumb(){
 //Check when a product is added to the cart
 add_action('woocommerce_add_to_cart','we_cart_product_added',10,6);
 function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_id,$variation,$cart_item_data){
-    if(is_product()){
-        //Only if is single product page
-        global $addtocart_data,$logFile;
+    global $logFile;
+    file_put_contents($logFile,"we cart product added => \r\n",FILE_APPEND);
+    if(!is_shop()){
+        //Only if is not in shop page
+        global $addtocart_data;
+        file_put_contents($logFile,"we cart product added not shop page => \r\n",FILE_APPEND);
        /*  file_put_contents($logFile,"we_cart_product_added\r\n",FILE_APPEND);
         file_put_contents($logFile,"cart item key => ".var_export($cart_item_key,true)."\r\n",FILE_APPEND);
         file_put_contents($logFile,"product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
@@ -181,7 +184,7 @@ function we_send_data_to_ga(){
     if(count($addtocart_data) > 0){
         //Add to cart data array is not void
         file_put_contents($logFile,"Add to cart data count\r\n",FILE_APPEND);
-        $data = $addtocart_data;
+        $data = $addtocart_data['data'];
         $event = C::GA_EVENT_ADD_TO_CART;
         $send_to_ga = true;
     }
