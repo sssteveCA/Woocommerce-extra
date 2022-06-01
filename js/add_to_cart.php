@@ -21,7 +21,7 @@ jQuery(document).ready(()=>{
     console.log(products_ul);
     let bt_add_to_cart = products_ul.find('a.add_to_cart_button');
     console.log(bt_add_to_cart);
-    bt_add_to_cart.on('click',function(e){
+    bt_add_to_cart.on('click',(e)=>{
         let link = jQuery(this).attr('href');
         let start = link.indexOf('=');
         let id = link.substring(start+1);
