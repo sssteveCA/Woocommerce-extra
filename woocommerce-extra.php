@@ -42,6 +42,18 @@ function we_activation(){
     }
 }
 
+//Prevent single product page reloading when user add a product to cart
+add_action('woocommerce_add_to_cart_redirect','we_prevent_addtocart_redirect');
+function we_prevent_addtocart_redirect($url = false){
+    // if another plugin gets here first, let it keep the URL
+    if(!empty($url)){
+        return $url;
+    }
+    // redirect back to the original page, without the 'add-to-cart' parameter.
+  // we add the 'get_bloginfo' part so it saves a redirect on https:// sites.
+    return get_bloginfo('wpurl').add_query_arg(array(),remove_query_arg('add-to-cart'));
+} // end function
+
 //Add categories breadcrumb in product page
 add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
 function we_product_categories_breadcrumb(){
