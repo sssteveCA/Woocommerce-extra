@@ -21,6 +21,8 @@ interface Constants{
     const ERR_WOOCOMMERCE_NOT_FOUND = 'Installa e attiva Woocommerce per utilizzare questo plugin';
 
     //Files
+    const FILE_JS_ADDTOCART = '/add_to_cart_data.php';
+    const FILE_JS_ADDTOCART_SP = '/add_to_cart_singleproduct.php';
     const FILE_JS_REMOVEFROMCART = '/remove_from_cart.php';
     const FILE_LOG = "log.txt";
     CONST FILE_SCRIPT_REMOVEFROMCART = '/remove_from_cart_data.php';
@@ -32,6 +34,7 @@ interface Constants{
 
     //Handles
     const H_JS_ADDTOCART = 'addtocart_js';
+    const H_JS_ADDTOCART_SINGLEPRODUCT = 'addtocart_sp_js';
     const H_JS_REMOVEFROMCART = 'removefromcart_js';
 
     //Pages

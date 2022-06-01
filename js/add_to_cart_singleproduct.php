@@ -12,7 +12,7 @@ use WoocommerceExtra\Interfaces\Constants as C;
 
 $pluginDir = plugin_dir_path(__FILE__);
 $pluginUrl = dirname(plugin_dir_url(__FILE__));
-$url = $pluginUrl.C::DIR_SCRIPT.'/add_to_cart_data.php';
+$url = $pluginUrl.C::DIR_SCRIPT.C::FILE_JS_ADDTOCART_SP;
 $event = C::GA_EVENT_ADD_TO_CART;
 
 $js = <<<JS

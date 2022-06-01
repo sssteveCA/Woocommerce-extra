@@ -114,9 +114,13 @@ function we_scripts(){
         //If user is in cart page
         wp_enqueue_script(C::H_JS_REMOVEFROMCART,$pluginUrl.C::DIR_JS.C::FILE_JS_REMOVEFROMCART,array(),null,true);
     }//if(is_cart()){
+    if(is_product()){
+        //Single product page
+        wp_enqueue_script(C::H_JS_ADDTOCART_SINGLEPRODUCT,$pluginUrl.C::DIR_JS.C::FILE_JS_ADDTOCART_SP,array(),null,true);  
+    }//if(is_product()){
     if(is_shop()){
         //Shop page
-        wp_enqueue_script(C::H_JS_ADDTOCART,$pluginUrl.C::DIR_JS.'/add_to_cart.php',array(),null,true);
+        wp_enqueue_script(C::H_JS_ADDTOCART,$pluginUrl.C::DIR_JS.C::FILE_JS_ADDTOCART,array(),null,true);
     }//if(is_shop()){
 }
 
