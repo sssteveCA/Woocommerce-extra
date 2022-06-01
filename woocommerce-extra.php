@@ -42,18 +42,6 @@ function we_activation(){
     }
 }
 
-//Prevent single product page reloading when user add a product to cart
-add_action('woocommerce_add_to_cart_redirect','we_prevent_addtocart_redirect');
-function we_prevent_addtocart_redirect($url = false){
-    // if another plugin gets here first, let it keep the URL
-    if(!empty($url)){
-        return $url;
-    }
-    // redirect back to the original page, without the 'add-to-cart' parameter.
-  // we add the 'get_bloginfo' part so it saves a redirect on https:// sites.
-    return get_bloginfo('wpurl').add_query_arg(array(),remove_query_arg('add-to-cart'));
-} // end function
-
 //Add categories breadcrumb in product page
 add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
 function we_product_categories_breadcrumb(){
@@ -72,6 +60,19 @@ function we_product_categories_breadcrumb(){
          file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);
     }
     echo $content;
+}
+
+//Check when a product is added to the cart
+add_action('woocommerce_add_to_cart','we_cart_product_added',10,6);
+function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_id,$variation,$cart_item_data){
+    global $logFile;
+    file_put_contents($logFile,"we_cart_product_added\r\n",FILE_APPEND);
+    file_put_contents($logFile,"cart item key => ".var_export($cart_item_key,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"quantity => ".var_export($quantity,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"variation id => ".var_export($variation_id,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"variation => ".var_export($variation,true)."\r\n",FILE_APPEND);
+    file_put_contents($logFile,"cart item data => ".var_export($cart_item_data,true)."\r\n",FILE_APPEND);
 }
 
 //Check when a product is removed from cart

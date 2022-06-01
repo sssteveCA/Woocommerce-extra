@@ -19,10 +19,10 @@ $js = <<<JS
 
 jQuery(document).ready(()=>{
     let bt_addtocart = jQuery("form.cart button[name=add-to-cart]");
-    console.log(bt_addtocart);
+    //console.log(bt_addtocart);
     bt_addtocart.on('click', (e)=>{
         let id = jQuery(this).val();
-        console.log(id);
+        //console.log(id);
     });//bt_addtocart.on('click', ()=>{
 });//jQuery(document).ready(()=>{
 JS;
