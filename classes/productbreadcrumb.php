@@ -15,7 +15,6 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe{
     private array $urlList = array(); //Categories URL page
     private string $homepage; //URL homepage
     private string $shoppage; //URL of the shop page
-    private string $logFile; //Filesystem path of log file
     private static $regex = '/((?<=href=")([^"]+))*((?<=href=")([^"]+))/i'; //Capture URL in string
 
     public function __construct(array $data)

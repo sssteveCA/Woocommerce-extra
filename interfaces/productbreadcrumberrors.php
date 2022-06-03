@@ -10,8 +10,8 @@ interface ProductBreadcrumbErrors{
 
     //Other
     //Error of ProductBreadcrumb class are between ERROR_MIN and ERROR_MAX
-    const ERROR_MIN = 21;  
-    const ERROR_MAX = 40;
+    const PBE_ERROR_MIN = 21;  
+    const PBE_ERROR_MAX = 40;
 }
 
 

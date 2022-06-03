@@ -12,7 +12,7 @@ interface BreadcrumbErrors{
 
     //Other
     //Error of superclass Breadcrumb are between ERROR_MIN and ERROR_MAX
-    const ERROR_MIN = 1;  
-    const ERROR_MAX = 20;
+    const BE_ERROR_MIN = 1;  
+    const BE_ERROR_MAX = 20;
 }
 ?>
