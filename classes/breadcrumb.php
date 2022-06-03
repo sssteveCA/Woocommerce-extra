@@ -8,25 +8,19 @@ use WoocommerceExtra\Interfaces\BreadcrumbErrors as Be;
 //parent class for custom breadcrumbs
 abstract class Breadcrumb implements Be,C{
    
-    private ?string $breadcrumb = null;
-    private array $catInfo = array();
-    private string $homepage; //URL homepage
-    private string $shoppage; //URL of the shop page
-    private int $errno = 0;
-    private ?string $error = null;
-    private string $logFile; //Filesystem path of log file
+    protected ?string $breadcrumb = null;
+    protected array $catInfo = array();
+    protected int $errno = 0;
+    protected ?string $error = null;
+    protected string $logFile; //Filesystem path of log file
 
     public function __construct(array $data)
     {
         $this->logFile = isset($data['logFile']) ? $data['logFile'] : C::FILE_LOG;
-        $this->homepage = isset($data['homepage']) ? $data['homepage'] : C::PAGES_HOME;
-        $this->shoppage = isset($data['shoppage']) ? $data['shoppage'] : C::PAGES_SHOP;
     }
 
     public function getBreadcrumb():?string{return $this->breadcrumb;}
     public function getCatInfo():array{return $this->catInfo;}
-    public function getHomepage():string{return $this->homepage;}
-    public function getShoppage():string{return $this->shoppage;}
     public function getErrno():int{return $this->errno;}
     public function getError():?string{
         switch($this->errno){
@@ -41,7 +35,7 @@ abstract class Breadcrumb implements Be,C{
     }
 
     //Generate breadcrumb HTML snippet
-    private function setBreadcrumb(): bool{
+    protected function setBreadcrumb(): bool{
         $ok = false;
         $i = 0;
         $this->errno = 0;
@@ -54,8 +48,6 @@ abstract class Breadcrumb implements Be,C{
                 $this->breadcrumb = <<<HTML
 <nav aria-label="breadcrumb">
     <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{$this->homepage}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{$this->shoppage}">Prodotti</a></li>
     {$items}
     </ul>
 </nav>

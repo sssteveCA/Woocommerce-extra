@@ -12,9 +12,11 @@
  */
 
 require_once('interfaces/constants.php');
+require_once('interfaces/breadcrumberrors.php');
 require_once('interfaces/productbreadcrumberrors.php');
 require_once('interfaces/productinfoerrors.php');
 require_once('classes/functions.php');
+require_once('classes/breadcrumb.php');
 require_once('classes/productbreadcrumb.php');
 require_once('classes/productinfo.php');
 
