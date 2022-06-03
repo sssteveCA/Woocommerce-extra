@@ -84,8 +84,44 @@ function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_i
         $currency = get_woocommerce_currency();
         $addtocart_data = Functions::add_to_cart_data($product_id,$currency,['logFile' => $logFile]);
         file_put_contents($logFile,"add to cart data => ".var_export($addtocart_data,true)."\r\n",FILE_APPEND);
-    }//if(is_product()){
-    
+    }//if(is_product()){   
+}
+
+add_action('wp_head','we_category_breadcrumb');
+function we_category_breadcrumb($content){
+    global $logFile,$wp;
+    //file_put_contents($logFile,"Woocommerce global => ".var_export($wp,true)."\r\n",FILE_APPEND);
+    if(is_product_category()){
+        //If user is viewing product category page
+        file_put_contents($logFile,"before main content\r\n",FILE_APPEND);
+?>
+        <script>
+            window.addEventListener('DOMContentLoaded',()=>{
+                var mainContainer = document.getElementById('content');
+                if(mainContainer){
+                    var div = document.createElement('div');
+                    var divContent = `              
+                    `;
+                    div.setAttribute('id','we-cat-breadcrumb');
+                    div.classList.add('cat-breadcrumb');
+                    div.innerHTML = divContent;
+                    mainContainer.insertBefore(div,mainContainer.firstChild);
+                }//if(mainContainer){   
+            });
+            
+        </script>
+<?php
+    $content =<<<HTML
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li>
+  </ol>
+</nav>
+HTML;
+    echo $content;
+    }
 }
 
 //Check when a product is removed from cart
