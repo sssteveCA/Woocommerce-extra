@@ -89,11 +89,15 @@ function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_i
 
 add_action('wp_head','we_category_breadcrumb');
 function we_category_breadcrumb($content){
-    global $logFile,$wp;
-    //file_put_contents($logFile,"Woocommerce global => ".var_export($wp,true)."\r\n",FILE_APPEND);
+    global $logFile,$woocommerce,$wp_query;
     if(is_product_category()){
         //If user is viewing product category page
-        file_put_contents($logFile,"before main content\r\n",FILE_APPEND);
+        $catObj = $wp_query->get_queried_object();
+        $id = $catObj->term_id;
+        $category = get_category($id);
+        file_put_contents($logFile,"catObj => ".var_export($catObj,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"category => ".var_export($category,true)."\r\n",FILE_APPEND);
+        
 ?>
         <script>
             window.addEventListener('DOMContentLoaded',()=>{

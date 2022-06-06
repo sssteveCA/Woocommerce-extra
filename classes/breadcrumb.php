@@ -42,9 +42,10 @@ abstract class Breadcrumb implements Be,C{
         $items = '';
         $nCat = count($this->catInfo);
         if($nCat > 0){
-            foreach($this->catInfo as $k => $v){
+            $catInfo_rev = array_reverse($this->catInfo);
+            foreach($catInfo_rev as $k => $v){
                 $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
-            }//foreach($this->catInfo as $k => $v){
+            }//foreach($catInfo_rev as $k => $v){
                 $this->breadcrumb = <<<HTML
 <nav aria-label="breadcrumb">
     <ul class="breadcrumb">
