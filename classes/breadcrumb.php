@@ -42,8 +42,18 @@ abstract class Breadcrumb implements Be,C{
         $items = '';
         $nCat = count($this->catInfo);
         if($nCat > 0){
-            $catInfo_rev = array_reverse($this->catInfo);
-            foreach($catInfo_rev as $k => $v){
+            //Extract first part of breadcrumb
+            $catInfoTemp = $this->catInfo;
+            $catInfo_1p = []; //This include home and shop part of breadcrumb
+            for($i = 0; $i < 2; $i++){
+                $el = array_shift($catInfoTemp);
+                array_push($catInfo_1p,$el);
+            }
+            //Reverse array product categories list order
+            $catInfoTemp = array_reverse($catInfoTemp);
+            //Join home,shop with product categories
+            $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
+            foreach($this->catInfo as $k => $v){
                 $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
             }//foreach($catInfo_rev as $k => $v){
                 $this->breadcrumb = <<<HTML
