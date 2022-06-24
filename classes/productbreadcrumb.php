@@ -66,8 +66,8 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe,Be{
     //Format the array in the correct way for generate HTML
     private function formatArray(): bool{
         $format = false;
-        $this->catInfo[0] = ['Home',$this->homepage];
-        $this->catInfo[1] = ['Prodotti',$this->shoppage];
+        $this->catInfo[0] = [C::BR_ITEM_HOME_PAGE,$this->homepage];
+        $this->catInfo[1] = [C::BR_ITEM_SHOP_PAGE,$this->shoppage];
         //The length of urlList and categoriesLIst must be the same
         $catListL = count($this->categoriesList);
         $urlListL = count($this->urlList); 

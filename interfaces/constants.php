@@ -5,6 +5,10 @@ namespace WoocommerceExtra\Interfaces;
 //Generic constants
 interface Constants{
 
+    //Breadcrumb
+    const BR_ITEM_HOME_PAGE = 'Home';
+    const BR_ITEM_SHOP_PAGE = 'Prodotti';
+
     //Directories
     const DIR_JS = "/js";
     const DIR_JSON = "/json";

@@ -73,8 +73,8 @@ function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_i
 }
 
 //Add categories breadcrumb in product page
-add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
-function we_product_categories_breadcrumb(){
+add_action('woocommerce_before_single_product','we_product_breadcrumb');
+function we_product_breadcrumb(){
     global $home_url,$logFile,$product,$shop_page_url;
     $content = "";
     //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);

@@ -36,8 +36,8 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
 
     //Format the array in the correct way for generate HTML
     private function formatArray(){
-        $this->catInfo[0] = ['name' => 'Home','link' => $this->homepage];
-        $this->catInfo[1] = ['name' => 'Prodotti','link' => $this->shoppage];
+        $this->catInfo[0] = ['name' => C::BR_ITEM_HOME_PAGE,'link' => $this->homepage];
+        $this->catInfo[1] = ['name' => C::BR_ITEM_SHOP_PAGE,'link' => $this->shoppage];
         //The length of urlList and categoriesLIst must be the same
         $catListL = count($this->categoriesList);
         for($i = 0; $i < $catListL; $i++){
@@ -79,11 +79,17 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
                 }   
             }//foreach($catInfo_rev as $k => $v){
                 $this->breadcrumb = <<<HTML
-<nav aria-label="breadcrumb">
-    <ul class="breadcrumb">
-    {$items}
-    </ul>
-</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    {$items}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 HTML;
         }//if($nCat > 0){
         else 
