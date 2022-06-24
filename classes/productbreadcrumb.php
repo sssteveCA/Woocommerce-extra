@@ -16,7 +16,7 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe{
     private array $urlList = array(); //Categories URL page
     private string $homepage; //URL homepage
     private string $shoppage; //URL of the shop page
-    private ?WC_Product $product; //Woocommerce product
+    private ?string $product_name; //Woocommerce product
     private static $regex = '/((?<=href=")([^"]+))*((?<=href=")([^"]+))/i'; //Capture URL in string
 
     public function __construct(array $data)
@@ -32,15 +32,14 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe{
         $this->setBreadcrumb();
     }
 
-    public function getProduct(): WC_Product{return $this->product;}
+    public function getProductName(): ?string{return $this->product_name;}
     public function getCategoriesList(): array{return $this->categoriesList;}
     public function getCategoriesStr(): string{return $this->categoriesStr;}
 
     //Check if required value are in correct format
     private function checkValues(array $data){
-        if(!isset($data['product']))throw new \Exception(Pbe::NO_WC_PRODUCT_INSTANCE_EXC);
-        if(!$data['product'] instanceof WC_Product)throw new \Exception(Pbe::INVALIDPRODUCTTYPE_EXC);
-        $this->product = $data['product'];
+        if(!isset($data['product_name']))throw new \Exception(Pbe::NO_PRODUCTNAME_EXC);
+        $this->product_name = $data['product_name'];
     }
 
     //Delete HTML tags and get the Categories
@@ -82,16 +81,43 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe{
         return $format;
     }
 
-    //Set the breadcrumb in product single paga
-    private function setProductBreadcrumb(): bool{
-        $set = false;
+    //Set the breadcrumb in product single page
+    protected function setBreadcrumb(): bool{
+        $ok = false;
+        $i = 0;
         $this->errno = 0;
-        $parent_set = parent::setBreadcrumb();
-        if($parent_set){
-            //setBreacrumb() executed successfully
-        }
-        return $set;
+        $items = '';
+        $nCat = count($this->catInfo);
+        if($nCat > 0){
+            //Extract first part of breadcrumb
+            $catInfoTemp = $this->catInfo;
+            $catInfo_1p = []; //This include home and shop part of breadcrumb
+            for($i = 0; $i < 2; $i++){
+                $el = array_shift($catInfoTemp);
+                array_push($catInfo_1p,$el);
+            }
+            //Reverse array product categories list order
+            $catInfoTemp = array_reverse($catInfoTemp);
+            //Join home,shop with product categories
+            $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
+            foreach($this->catInfo as $k => $v){
+                //If item is not the last in array
+                $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
+            }//foreach($catInfo_rev as $k => $v){
+            $items .= '<li class="breadcrumb-item active">'.$this->product_name.'</li>';
+            $this->breadcrumb = <<<HTML
+<nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+    {$items}
+    </ul>
+</nav>
+HTML;
+        }//if($nCat > 0){
+        else 
+            $this->errno = Be::NOCATEGORIES;
+        return $ok;
     }
+    
 
 }
 ?>
