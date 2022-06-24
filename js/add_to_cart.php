@@ -20,6 +20,7 @@ jQuery(document).ready(()=>{
     let products_ul = jQuery('.products').first();
     let bt_add_to_cart = products_ul.find('a.add_to_cart_button');
     bt_add_to_cart.on('click',(e)=>{
+        //When add to cart button is clicked send product data added to cart
         let link = jQuery(this).attr('href');
         let start = link.indexOf('=');
         let id = link.substring(start+1);

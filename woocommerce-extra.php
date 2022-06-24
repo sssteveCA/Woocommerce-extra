@@ -136,7 +136,7 @@ HTML;
 }
 
 //Check when a product is removed from cart
-add_action('woocommerce_cart_item_removed','we_cart_product_removed',10,2);
+//add_action('woocommerce_cart_item_removed','we_cart_product_removed',10,2);
 function we_cart_product_removed($product_key,$cart){
     global $logFile;
     $currency = get_woocommerce_currency();
@@ -163,7 +163,7 @@ function we_edit_description_tab(){
     //file_put_contents($logFile,"Content => ".var_export($html,true)."\r\n",FILE_APPEND);
     //echo 'Buongiorno!';
     $id = $product->get_id(); //Get Product id to choose which JSON open
-    file_put_contents($logFile,"Product id => ".var_export($id,true)."\r\n",FILE_APPEND);
+    //file_put_contents($logFile,"Product id => ".var_export($id,true)."\r\n",FILE_APPEND);
     $data = [
         'logFile' => $logFile,
         'path' => $pluginDir.C::DIR_JSON."/product_{$id}.json"
@@ -225,14 +225,14 @@ function we_send_data_to_ga(){
     $send_to_ga = false; //If it's true send data array to Google Analytics
     if(count($purchase_data) > 0){
         //Purchase data array is not void
-        file_put_contents($logFile,"Purchase data count\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Purchase data count\r\n",FILE_APPEND);
         $data = $purchase_data;
         $event = C::GA_EVENT_PURCHASE;
         $send_to_ga = true;
     }
     if(count($addtocart_data) > 0){
         //Add to cart data array is not void
-        file_put_contents($logFile,"Add to cart data count\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Add to cart data count\r\n",FILE_APPEND);
         $data = $addtocart_data['data'];
         $event = C::GA_EVENT_ADD_TO_CART;
         $send_to_ga = true;

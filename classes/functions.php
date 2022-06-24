@@ -32,6 +32,7 @@ class Functions implements C{
                     'slug' => $product->get_slug()
             ];
         }//if($product->exists()){
+        file_put_contents($logFile,"add_to_cart_data => ".var_export($data,true)."\r\n",FILE_APPEND);
         return $data;
     }
 
@@ -62,7 +63,7 @@ class Functions implements C{
         $data['tax'] = floatval($order->get_total_tax());
         $data['value'] = floatval($order->get_total());
         $data['transaction_id'] = $order->get_transaction_id();
-        //file_put_contents($logFile,"Data => ".var_export($data,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"purchase_data => ".var_export($data,true)."\r\n",FILE_APPEND);
         return $data;
     }
 
@@ -71,7 +72,7 @@ class Functions implements C{
         $data = [];
         $logFile = isset($params['logFile']) ? $params['logFile'] : C::FILE_LOG;
         $removed = $cart->get_removed_cart_contents();
-        file_put_contents($logFile,"Cart removed => ".var_export($removed,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"Cart removed => ".var_export($removed,true)."\r\n",FILE_APPEND);
         foreach($removed as $k => $v){
             //Check product key
             if($k == $product_key){
