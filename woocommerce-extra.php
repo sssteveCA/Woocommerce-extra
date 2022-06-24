@@ -94,9 +94,15 @@ function we_category_breadcrumb($content){
         //If user is viewing product category page
         $catObj = $wp_query->get_queried_object();
         $id = $catObj->term_id;
-        $category = get_category($id);
-        file_put_contents($logFile,"catObj => ".var_export($catObj,true)."\r\n",FILE_APPEND);
-        file_put_contents($logFile,"category => ".var_export($category,true)."\r\n",FILE_APPEND);
+        $i = 1;
+        $cat_term = get_term_by('id',$id,'product_cat');
+        file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
+        while($cat_term->parent != 0){
+            $i++;
+            $parent_id = $cat_term->parent;
+            $cat_term = get_term_by('id',$parent_id,'product_cat');
+            file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
+        }
         
 ?>
         <script>
@@ -104,7 +110,7 @@ function we_category_breadcrumb($content){
                 var mainContainer = document.getElementById('content');
                 if(mainContainer){
                     var div = document.createElement('div');
-                    var divContent = `              
+                    var divContent = `<?php ?>              
                     `;
                     div.setAttribute('id','we-cat-breadcrumb');
                     div.classList.add('cat-breadcrumb');
@@ -124,7 +130,7 @@ function we_category_breadcrumb($content){
   </ol>
 </nav>
 HTML;
-    echo $content;
+    //echo $content;
     }
 }
 

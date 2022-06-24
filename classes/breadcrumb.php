@@ -14,7 +14,7 @@ abstract class Breadcrumb implements Be,C{
     protected ?string $error = null;
     protected string $logFile; //Filesystem path of log file
 
-    public function __construct(array $data)
+    public function __construct(array $data = array())
     {
         $this->logFile = isset($data['logFile']) ? $data['logFile'] : C::FILE_LOG;
     }
@@ -54,6 +54,7 @@ abstract class Breadcrumb implements Be,C{
             //Join home,shop with product categories
             $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
             foreach($this->catInfo as $k => $v){
+                //If item is not the last in array
                 $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
             }//foreach($catInfo_rev as $k => $v){
                 $this->breadcrumb = <<<HTML
