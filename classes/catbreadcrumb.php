@@ -3,12 +3,13 @@
 namespace WoocommerceExtra\Classes;
 
 use WoocommerceExtra\Interfaces\Constants as C;
+use WoocommerceExtra\Interfaces\BreadcrumbErrors as Be;
 use WoocommerceExtra\Interfaces\CatBreadcrumbErrors as Cbe;
 use WoocommerceExtra\Classes\Breadcrumb;
 
 //This class returns the HTML category breadcrumb of single product page
 
-class CatBreadcrumb extends Breadcrumb implements C,Cbe{
+class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
     private string $categoriesStr; //Categories string from product object
     private array $categoriesList = array(); //Categories list
     private array $urlList = array(); //Categories URL page
@@ -69,6 +70,42 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe{
             $format = true;
         }
         return $format;
+    }
+
+    //Generate breadcrumb HTML for product category pages
+    protected function setBreadcrumb(): bool{
+        $ok = false;
+        $i = 0;
+        $this->errno = 0;
+        $items = '';
+        $nCat = count($this->catInfo);
+        if($nCat > 0){
+            //Extract first part of breadcrumb
+            $catInfoTemp = $this->catInfo;
+            $catInfo_1p = []; //This include home and shop part of breadcrumb
+            for($i = 0; $i < 2; $i++){
+                $el = array_shift($catInfoTemp);
+                array_push($catInfo_1p,$el);
+            }
+            //Reverse array product categories list order
+            $catInfoTemp = array_reverse($catInfoTemp);
+            //Join home,shop with product categories
+            $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
+            foreach($this->catInfo as $k => $v){
+                //If item is not the last in array
+                $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
+            }//foreach($catInfo_rev as $k => $v){
+                $this->breadcrumb = <<<HTML
+<nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+    {$items}
+    </ul>
+</nav>
+HTML;
+        }//if($nCat > 0){
+        else 
+            $this->errno = Be::NOCATEGORIES;
+        return $ok;
     }
 
 }

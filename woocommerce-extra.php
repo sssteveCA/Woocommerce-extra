@@ -25,6 +25,8 @@ use WoocommerceExtra\Classes\Functions;
 use WoocommerceExtra\Classes\ProductBreadcrumb;
 use WoocommerceExtra\Classes\ProductInfo;
 
+$home_url = get_home_url(); //Absolute URL main page
+$shop_page_url = get_permalink(wc_get_page_id('shop')); //Absolute URL Woocommerce shop page
 $pluginDir = plugin_dir_path(__FILE__);
 $pluginUrl = plugin_dir_url(__FILE__);
 $logFile = $pluginDir.C::FILE_LOG;
@@ -48,10 +50,12 @@ function we_activation(){
 //Add categories breadcrumb in product page
 add_action('woocommerce_before_single_product','we_product_categories_breadcrumb');
 function we_product_categories_breadcrumb(){
-    global $logFile,$product;
+    global $home_url,$logFile,$product,$shop_page_url;
     $content = "";
     //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
     $data = [
+        'homepage' => $home_url,
+        'shoppage' => $shop_page_url,
         'categories' => $product->get_categories(),
         'logFile' => $logFile,
         'product_name' => $product->get_name()
@@ -90,20 +94,34 @@ function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_i
 
 add_action('wp_head','we_category_breadcrumb');
 function we_category_breadcrumb($content){
-    global $logFile,$woocommerce,$wp_query;
+    global $home_url,$logFile,$shop_page_url,$wp,$wp_query;
     if(is_product_category()){
         //If user is viewing product category page
+        $data = [
+            'homepage' => $home_url,
+            'shoppage' => $shop_page_url,
+            'categories' => []
+        ];
         $catObj = $wp_query->get_queried_object();
         $id = $catObj->term_id;
         $i = 1;
         $cat_term = get_term_by('id',$id,'product_cat');
-        file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
+        //file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
+        $data['categories'][] = [
+            'name' => $cat_term->name,
+            'link' => get_term_link($cat_term)
+        ];
         while($cat_term->parent != 0){
             $i++;
             $parent_id = $cat_term->parent;
             $cat_term = get_term_by('id',$parent_id,'product_cat');
-            file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
+            //file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
+            $data['categories'][] = [
+                'name' => $cat_term->name,
+                'link' => get_term_link($cat_term)
+            ];
         }
+        file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND);
         
 ?>
         <script>

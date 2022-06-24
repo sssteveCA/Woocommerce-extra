@@ -10,7 +10,7 @@ use WoocommerceExtra\Classes\Breadcrumb;
 
 //This class returns the HTML category breadcrumb of single product page
 
-class ProductBreadcrumb extends Breadcrumb implements C,Pbe{
+class ProductBreadcrumb extends Breadcrumb implements C,Pbe,Be{
     private string $categoriesStr; //Categories string from product object
     private array $categoriesList = array(); //Categories list
     private array $urlList = array(); //Categories URL page
