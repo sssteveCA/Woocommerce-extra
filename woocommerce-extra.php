@@ -129,18 +129,18 @@ function we_category_breadcrumb($content){
                 'link' => get_term_link($cat_term)
             ];
         }
-        file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND); 
+        //file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND); 
         try{
             $catBreadcrumb = new CatBreadcrumb($data);
             $content = $catBreadcrumb->getBreadcrumb();
-            file_put_contents($logFile,var_export($content,true)."\r\n",FILE_APPEND);
+            //file_put_contents($logFile,var_export($content,true)."\r\n",FILE_APPEND);
 ?>
 <script>
     window.addEventListener('DOMContentLoaded',()=>{
         var mainContainer = document.getElementById('content');
         if(mainContainer){
             var div = document.createElement('div');
-            var divContent = `<?php ?>              
+            var divContent = `<?php echo $content; ?>              
             `;
             div.setAttribute('id','we-cat-breadcrumb');
             div.classList.add('cat-breadcrumb');

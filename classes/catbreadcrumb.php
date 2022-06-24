@@ -67,7 +67,7 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
             $catInfoTemp = array_reverse($catInfoTemp);
             //Join home,shop with product categories
             $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
-            file_put_contents($this->logFile,"CatBreadcrumb catInfo => ".var_export($this->catInfo,true)."\r\n",FILE_APPEND);
+            //file_put_contents($this->logFile,"CatBreadcrumb catInfo => ".var_export($this->catInfo,true)."\r\n",FILE_APPEND);
             foreach($this->catInfo as $k => $v){
                 if($k != array_key_last($this->catInfo)){
                      //If item is not the last in array
