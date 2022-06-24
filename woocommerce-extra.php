@@ -53,7 +53,8 @@ function we_product_categories_breadcrumb(){
     //file_put_contents($logFile,"Product => ".var_export($product,true)."\r\n",FILE_APPEND);
     $data = [
         'categories' => $product->get_categories(),
-        'logFile' => $logFile
+        'logFile' => $logFile,
+        'product_name' => $product->get_name()
     ];
     try{
        $breadcrumb = new ProductBreadcrumb($data); 
