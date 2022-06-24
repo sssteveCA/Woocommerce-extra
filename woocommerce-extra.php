@@ -14,15 +14,18 @@
 require_once('interfaces/constants.php');
 require_once('interfaces/breadcrumberrors.php');
 require_once('interfaces/productbreadcrumberrors.php');
+require_once('interfaces/catbreadcrumberrors.php');
 require_once('interfaces/productinfoerrors.php');
 require_once('classes/functions.php');
 require_once('classes/breadcrumb.php');
 require_once('classes/productbreadcrumb.php');
+require_once('classes/catbreadcrumb.php');
 require_once('classes/productinfo.php');
 
 use WoocommerceExtra\Interfaces\Constants as C;
 use WoocommerceExtra\Classes\Functions;
 use WoocommerceExtra\Classes\ProductBreadcrumb;
+use WoocommerceExtra\Classes\CatBreadcrumb;
 use WoocommerceExtra\Classes\ProductInfo;
 
 $home_url = get_home_url(); //Absolute URL main page
@@ -100,7 +103,7 @@ function we_wc_init(){
 
 add_action('wp_head','we_category_breadcrumb');
 function we_category_breadcrumb($content){
-    global $home_url,$logFile,$shop_page_url,$wp,$wp_query;
+    global $home_url,$logFile,$shop_page_url,$wp_query;
     if(is_product_category()){
         //If user is viewing product category page
         $data = [
@@ -110,7 +113,6 @@ function we_category_breadcrumb($content){
         ];
         $catObj = $wp_query->get_queried_object();
         $id = $catObj->term_id;
-        $i = 1;
         $cat_term = get_term_by('id',$id,'product_cat');
         //file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
         $data['categories'][] = [
@@ -118,7 +120,6 @@ function we_category_breadcrumb($content){
             'link' => get_term_link($cat_term)
         ];
         while($cat_term->parent != 0){
-            $i++;
             $parent_id = $cat_term->parent;
             $cat_term = get_term_by('id',$parent_id,'product_cat');
             //file_put_contents($logFile,"cat_term {$i} => ".var_export($cat_term,true)."\r\n",FILE_APPEND);
@@ -127,7 +128,11 @@ function we_category_breadcrumb($content){
                 'link' => get_term_link($cat_term)
             ];
         }
-        file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND);    
+        file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND); 
+        try{
+            $catBreadcrumb = new CatBreadcrumb($data);
+            $content = $catBreadcrumb->getBreadcrumb();
+            file_put_contents($logFile,var_export($content,true)."\r\n");
 ?>
 <script>
     window.addEventListener('DOMContentLoaded',()=>{
@@ -142,20 +147,13 @@ function we_category_breadcrumb($content){
             mainContainer.insertBefore(div,mainContainer.firstChild);
         }//if(mainContainer){   
     });
-    
 </script>
 <?php
-    $content =<<<HTML
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
-HTML;
+        }catch(Exception $e){
+            file_put_contents($logFile,var_export($e->getMessage(),true)."\r\n");
+        }
     //echo $content;
-    }
+    }//if(is_product_category()){
 }
 
 //Check when a product is removed from cart
