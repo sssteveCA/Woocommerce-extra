@@ -36,13 +36,14 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
 
     //Format the array in the correct way for generate HTML
     private function formatArray(){
-        $this->catInfo[0] = ['Home',$this->homepage];
-        $this->catInfo[1] = ['Prodotti',$this->shoppage];
+        $this->catInfo[0] = ['name' => 'Home','link' => $this->homepage];
+        $this->catInfo[1] = ['name' => 'Prodotti','link' => $this->shoppage];
         //The length of urlList and categoriesLIst must be the same
         $catListL = count($this->categoriesList);
         for($i = 0; $i < $catListL; $i++){
             $this->catInfo[] = [
-                $this->categoriesList[$i]
+                'name' => $this->categoriesList[$i]['name'],
+                'link' => $this->categoriesList[$i]['link']
             ];
         }//for($i = 0; $i < $catListL; $i++){ 
     }
@@ -66,14 +67,15 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
             $catInfoTemp = array_reverse($catInfoTemp);
             //Join home,shop with product categories
             $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
+            file_put_contents($this->logFile,"CatBreadcrumb catInfo => ".var_export($this->catInfo,true)."\r\n",FILE_APPEND);
             foreach($this->catInfo as $k => $v){
                 if($k != array_key_last($this->catInfo)){
                      //If item is not the last in array
-                    $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
+                    $items .= '<li class="breadcrumb-item"><a href="'.$v['link'].'">'.$v['name'].'</a></li>';
                 }
                 else{
                     //If term is last in the loop
-                    $items .= '<li class="breadcrumb-item active" aria-current="page">'.$v[0].'</li>';
+                    $items .= '<li class="breadcrumb-item active" aria-current="page">'.$v['name'].'</li>';
                 }   
             }//foreach($catInfo_rev as $k => $v){
                 $this->breadcrumb = <<<HTML

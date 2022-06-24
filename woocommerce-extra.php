@@ -107,6 +107,7 @@ function we_category_breadcrumb($content){
     if(is_product_category()){
         //If user is viewing product category page
         $data = [
+            'logFile' => $logFile,
             'homepage' => $home_url,
             'shoppage' => $shop_page_url,
             'categories' => []
@@ -132,7 +133,7 @@ function we_category_breadcrumb($content){
         try{
             $catBreadcrumb = new CatBreadcrumb($data);
             $content = $catBreadcrumb->getBreadcrumb();
-            file_put_contents($logFile,var_export($content,true)."\r\n");
+            file_put_contents($logFile,var_export($content,true)."\r\n",FILE_APPEND);
 ?>
 <script>
     window.addEventListener('DOMContentLoaded',()=>{
@@ -150,7 +151,7 @@ function we_category_breadcrumb($content){
 </script>
 <?php
         }catch(Exception $e){
-            file_put_contents($logFile,var_export($e->getMessage(),true)."\r\n");
+            file_put_contents($logFile,var_export($e->getMessage(),true)."\r\n",FILE_APPEND);
         }
     //echo $content;
     }//if(is_product_category()){
@@ -196,7 +197,7 @@ function we_edit_description_tab(){
       //file_put_contents($logFile,"Product HTML => ".var_export($html,true)."\r\n",FILE_APPEND);
     }
     catch(Exception $e){
-        file_put_contents($logFile,$e->getMessage()."\r\n",FILE_APPEND);
+        file_put_contents($logFile,var_export($e->getMessage(),true)."\r\n",FILE_APPEND);
     }
     echo $html;
 }
