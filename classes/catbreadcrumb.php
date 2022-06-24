@@ -10,66 +10,41 @@ use WoocommerceExtra\Classes\Breadcrumb;
 //This class returns the HTML category breadcrumb of single product page
 
 class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
-    private string $categoriesStr; //Categories string from product object
     private array $categoriesList = array(); //Categories list
-    private array $urlList = array(); //Categories URL page
     private string $homepage; //URL homepage
     private string $shoppage; //URL of the shop page
-    private static $regex = '/((?<=href=")([^"]+))*((?<=href=")([^"]+))/i'; //Capture URL in string
-
-
     public function __construct(array $data)
     {
         parent::__construct($data);
-        $this->homepage = isset($data['homepage']) ? $data['homepage'] : C::PAGES_HOME;
-        $this->shoppage = isset($data['shoppage']) ? $data['shoppage'] : C::PAGES_SHOP;
-        $this->categoriesStr = $data['categories'];
-        $this->setCategoriesList();
-        if(!$this->setUrlList())throw new \Exception(Cbe::INCORRECTPATTERN_EXC);
-        if(!$this->formatArray())throw new \Exception(Cbe::URL_CAT_ARRAY_LENGTHMISMATCH);
+        $this->checkValues($data);
+        $this->formatArray();
         $this->setBreadcrumb();
     }
 
-    public function getCategoriesList(){return $this->categoriesList;}
-    public function getCategoriesStr(){return $this->categoriesStr;}
+    public function getHomepageUrl():string {return $this->homepage;}
+    public function getShoppageUrl():string {return $this->shoppage;}
+    public function getCategoriesList():array {return $this->categoriesList;}
 
-    //Delete HTML tags and get the Categories
-    private function setCategoriesList(){
-        $stripped = strip_tags($this->categoriesStr);
-        $this->categoriesList = explode(',',$stripped);
-    }
-
-    //Set URL list from given categories string
-    private function setUrlList(): bool{
-        $ok = false;
-        $match = preg_match_all(CatBreadcrumb::$regex,$this->categoriesStr,$matches);
-        if($match){
-            //String passed is valid
-            $this->urlList = $matches[0];
-            //file_put_contents($this->logFile,"urlList => ".var_export($this->urlList,true)."\r\n",FILE_APPEND);
-            $ok = true;
-        }
-        return $ok;
+    //Check if required value are in correct format
+    private function checkValues(array $data){
+        if(!isset($data['homepage'],$data['shoppage'],$data['categories']))throw new \Exception(Cbe::VALUENOTSET_EXC);
+        if(!is_array($data['categories']))throw new \Exception(Cbe::CATEGORIES_PARAM_NOTARRAY);
+        $this->homepage = $data['homepage'];
+        $this->shoppage = $data['shoppage'];
+        $this->categoriesList = $data['categories'];
     }
 
     //Format the array in the correct way for generate HTML
-    private function formatArray(): bool{
-        $format = false;
+    private function formatArray(){
         $this->catInfo[0] = ['Home',$this->homepage];
         $this->catInfo[1] = ['Prodotti',$this->shoppage];
         //The length of urlList and categoriesLIst must be the same
         $catListL = count($this->categoriesList);
-        $urlListL = count($this->urlList); 
-        if($catListL == $urlListL){
-            for($i = 0; $i < $catListL; $i++){
-                $this->catInfo[] = [
-                    $this->categoriesList[$i],
-                    $this->urlList[$i]
-                ];
-            }//for($i = 0; $i < $catListL; $i++){
-            $format = true;
-        }
-        return $format;
+        for($i = 0; $i < $catListL; $i++){
+            $this->catInfo[] = [
+                $this->categoriesList[$i]
+            ];
+        }//for($i = 0; $i < $catListL; $i++){ 
     }
 
     //Generate breadcrumb HTML for product category pages
@@ -92,8 +67,14 @@ class CatBreadcrumb extends Breadcrumb implements C,Cbe,Be{
             //Join home,shop with product categories
             $this->catInfo = array_merge($catInfo_1p,$catInfoTemp);
             foreach($this->catInfo as $k => $v){
-                //If item is not the last in array
-                $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
+                if($k != array_key_last($this->catInfo)){
+                     //If item is not the last in array
+                    $items .= '<li class="breadcrumb-item"><a href="'.$v[1].'">'.$v[0].'</a></li>';
+                }
+                else{
+                    //If term is last in the loop
+                    $items .= '<li class="breadcrumb-item active" aria-current="page">'.$v[0].'</li>';
+                }   
             }//foreach($catInfo_rev as $k => $v){
                 $this->breadcrumb = <<<HTML
 <nav aria-label="breadcrumb">

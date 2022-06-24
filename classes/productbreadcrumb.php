@@ -16,7 +16,7 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe,Be{
     private array $urlList = array(); //Categories URL page
     private string $homepage; //URL homepage
     private string $shoppage; //URL of the shop page
-    private ?string $product_name; //Woocommerce product
+    private string $product_name; //Woocommerce product
     private static $regex = '/((?<=href=")([^"]+))*((?<=href=")([^"]+))/i'; //Capture URL in string
 
     public function __construct(array $data)
@@ -32,7 +32,9 @@ class ProductBreadcrumb extends Breadcrumb implements C,Pbe,Be{
         $this->setBreadcrumb();
     }
 
-    public function getProductName(): ?string{return $this->product_name;}
+    public function getHomepageUrl():string {return $this->homepage;}
+    public function getShoppageUrl():string {return $this->shoppage;}
+    public function getProductName(): string{return $this->product_name;}
     public function getCategoriesList(): array{return $this->categoriesList;}
     public function getCategoriesStr(): string{return $this->categoriesStr;}
 
