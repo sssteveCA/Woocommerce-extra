@@ -26,7 +26,7 @@ use WoocommerceExtra\Classes\ProductBreadcrumb;
 use WoocommerceExtra\Classes\ProductInfo;
 
 $home_url = get_home_url(); //Absolute URL main page
-$shop_page_url = get_permalink(wc_get_page_id('shop')); //Absolute URL Woocommerce shop page
+$shop_page_url = '';
 $pluginDir = plugin_dir_path(__FILE__);
 $pluginUrl = plugin_dir_url(__FILE__);
 $logFile = $pluginDir.C::FILE_LOG;
@@ -45,6 +45,28 @@ function we_activation(){
         // WooCommerce is NOT enabled!
         wp_die(C::ERR_WOOCOMMERCE_NOT_FOUND);
     }
+}
+
+//Check when a product is added to the cart
+add_action('woocommerce_add_to_cart','we_cart_product_added',10,6);
+function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_id,$variation,$cart_item_data){
+    global $logFile;
+    file_put_contents($logFile,"we cart product added => \r\n",FILE_APPEND);
+    if(!is_shop()){
+        //Only if is not in shop page
+        global $addtocart_data;
+        file_put_contents($logFile,"we cart product added not shop page => \r\n",FILE_APPEND);
+       /*  file_put_contents($logFile,"we_cart_product_added\r\n",FILE_APPEND);
+        file_put_contents($logFile,"cart item key => ".var_export($cart_item_key,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"quantity => ".var_export($quantity,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"variation id => ".var_export($variation_id,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"variation => ".var_export($variation,true)."\r\n",FILE_APPEND);
+        file_put_contents($logFile,"cart item data => ".var_export($cart_item_data,true)."\r\n",FILE_APPEND); */
+        $currency = get_woocommerce_currency();
+        $addtocart_data = Functions::add_to_cart_data($product_id,$currency,['logFile' => $logFile]);
+        file_put_contents($logFile,"add to cart data => ".var_export($addtocart_data,true)."\r\n",FILE_APPEND);
+    }//if(is_product()){   
 }
 
 //Add categories breadcrumb in product page
@@ -70,26 +92,10 @@ function we_product_categories_breadcrumb(){
     echo $content;
 }
 
-//Check when a product is added to the cart
-add_action('woocommerce_add_to_cart','we_cart_product_added',10,6);
-function we_cart_product_added($cart_item_key,$product_id,$quantity,$variation_id,$variation,$cart_item_data){
-    global $logFile;
-    file_put_contents($logFile,"we cart product added => \r\n",FILE_APPEND);
-    if(!is_shop()){
-        //Only if is not in shop page
-        global $addtocart_data;
-        file_put_contents($logFile,"we cart product added not shop page => \r\n",FILE_APPEND);
-       /*  file_put_contents($logFile,"we_cart_product_added\r\n",FILE_APPEND);
-        file_put_contents($logFile,"cart item key => ".var_export($cart_item_key,true)."\r\n",FILE_APPEND);
-        file_put_contents($logFile,"product id => ".var_export($product_id,true)."\r\n",FILE_APPEND);
-        file_put_contents($logFile,"quantity => ".var_export($quantity,true)."\r\n",FILE_APPEND);
-        file_put_contents($logFile,"variation id => ".var_export($variation_id,true)."\r\n",FILE_APPEND);
-        file_put_contents($logFile,"variation => ".var_export($variation,true)."\r\n",FILE_APPEND);
-        file_put_contents($logFile,"cart item data => ".var_export($cart_item_data,true)."\r\n",FILE_APPEND); */
-        $currency = get_woocommerce_currency();
-        $addtocart_data = Functions::add_to_cart_data($product_id,$currency,['logFile' => $logFile]);
-        file_put_contents($logFile,"add to cart data => ".var_export($addtocart_data,true)."\r\n",FILE_APPEND);
-    }//if(is_product()){   
+add_action('woocommerce_init','we_wc_init');
+function we_wc_init(){
+    global $shop_page_url;
+    $shop_page_url = get_permalink(wc_get_page_id('shop')); //Absolute URL Woocommerce shop page
 }
 
 add_action('wp_head','we_category_breadcrumb');
@@ -121,24 +127,23 @@ function we_category_breadcrumb($content){
                 'link' => get_term_link($cat_term)
             ];
         }
-        file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND);
-        
+        file_put_contents($logFile,"cat_term data => ".var_export($data,true)."\r\n",FILE_APPEND);    
 ?>
-        <script>
-            window.addEventListener('DOMContentLoaded',()=>{
-                var mainContainer = document.getElementById('content');
-                if(mainContainer){
-                    var div = document.createElement('div');
-                    var divContent = `<?php ?>              
-                    `;
-                    div.setAttribute('id','we-cat-breadcrumb');
-                    div.classList.add('cat-breadcrumb');
-                    div.innerHTML = divContent;
-                    mainContainer.insertBefore(div,mainContainer.firstChild);
-                }//if(mainContainer){   
-            });
-            
-        </script>
+<script>
+    window.addEventListener('DOMContentLoaded',()=>{
+        var mainContainer = document.getElementById('content');
+        if(mainContainer){
+            var div = document.createElement('div');
+            var divContent = `<?php ?>              
+            `;
+            div.setAttribute('id','we-cat-breadcrumb');
+            div.classList.add('cat-breadcrumb');
+            div.innerHTML = divContent;
+            mainContainer.insertBefore(div,mainContainer.firstChild);
+        }//if(mainContainer){   
+    });
+    
+</script>
 <?php
     $content =<<<HTML
 <nav aria-label="breadcrumb">
